@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block container %}
+
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="/static/css/message.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+        <div class="message-container">
+            <p class="message">{{message}} </p>
+        </div>
+    </div>
+  </body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block container %}
+
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="/static/css/userlist.css"
+    />
+  </head>
+  <body>
+    <div class="container"> 
+      <div class="search-section">
+        <form action="{{ url_for('userlist') }}" method="get" class="search-form">
+            <input type="text" name="q" placeholder="Search username..." value="{{ search_term }}">
+            <button type="submit">Search</button>
+        </form>
+      </div>
+
+      <div class="user-display-container">
+        <div class = "subtitle-container">
+          <span class = "subtitle">User</span>
+        </div>
+
+        <div class="user-widget-container">
+          <ul>
+            {% for user in usersInfo %}
+              <li>
+                <div class="user-widgets-w-delete-button">
+                  <div class="user-widget-info-only">
+                      <div class="user-content">
+                        <div class="user-details">
+                            <p class="user-name">{{user.username}}</p>
+                            <p class="user-email">{{user.email}}</p>
+                        </div>
+                        <div class="user-widget-avatar">
+                            <div class="placeholder">Picture</div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class = "delete-icon-container">
+                    <form action="{{ url_for('delete_user_q', user_id=user.username) }}" method="post">
+                      <input type="hidden" name="username" value="{{ user.username }}">
+                      <input type="hidden" name="email" value="{{ user.email }}">
+                      <button type="submit">
+                        <img src="{{ url_for('static', filename='images/delete-icon.png') }}" alt="Delete" width="70" height="70">
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+
+      
+    </div>
+  </body>
+</html>
+{% endblock %}
