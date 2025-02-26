@@ -41,14 +41,31 @@ def create_app():
 
     @app.route("/")
     def home():
-        """
-        Route for the home page.
-        Returns:
-            rendered template (str): The rendered HTML template.
-        """
 
-        # docs = db.messages.find({}).sort("created_at", -1)
+        return render_template("rinbase.html")
+    
+    @app.route("/login",methods=["POST","GET"])
+    def login():
+        if request.method == 'POST':
+            username = request.form.get('username')
+            email = request.form.get("email")
+            usertype= request.form.get("isAdmin")#如果是admin，值=="on"; 如果不是admin, 值==None
+            #login process
+
+            #if login successfully as a guest
+            if (usertype==None):
+                return redirect(url_for("buildinglist"))
+            elif (usertype=="on"):
+                return redirect(url_for("admin_dashboard"))
+            else:
+                return redirect(url_for("message",message="login failed"))
+            
+            
         return render_template("login.html")
+    
+    @app.route("/register",methods=["POST","GET"])
+    def register():
+        return render_template("register.html")
 
 
     
@@ -157,20 +174,44 @@ def create_app():
         print("req get for delete user from Userlist")
         return render_template("delete-user.html", username=user_id)
     
-    @app.route("/message", methods=['POST'])
+    @app.route("/message", methods=['POST','GET'])
     def message():
         message_from_req= request.form.get('message')
+        if(message_from_req==None):
+            message_from_req = request.args.get('message', '')
+        
+        print("message",message_from_req)
+        redirectAddress=url_for("home")
+
         if message_from_req == "User Deleted":
             username = request.form.get('username')
             email = request.form.get("email")
-            
+            redirectAddress=url_for("userlist")
+
             # do something in backend to deleted the user
             # can retrieve user id if needed
             # if success, proceed with message user deleted
             # else, change the message and show the user that the deletion failed
+
+        if message_from_req == "Registration Sucessful":
+            username = request.form.get('username')
+            email = request.form.get("email")
+            password = request.form.get("password")
+            usertype= request.form.get("isAdmin")#如果是admin，值=="on"; 如果不是admin, 值==None
+
+            print("POST method from register page")
+            print(f"Received username: {username}")
+            print(f"Received email: {email}")
+            print(f"Received password: {password}")
+            print(f"Received usertype: {usertype}") #
+            
+            redirectAddress=url_for("login")
+            # process the submitted data here
         
         
-        return render_template("message.html", message=message_from_req)
+        
+        return render_template("message.html", redirectWebsite=redirectAddress,
+                               message=message_from_req)
     
 
 

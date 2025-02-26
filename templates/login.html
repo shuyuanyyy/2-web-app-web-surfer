@@ -1,23 +1,87 @@
 <!DOCTYPE html>
 
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block container %}
-
 <html>
-  <head>
-    <title>This is login title</title>
-    <link
-      rel="stylesheet"
-      href="/static/css/style.css"
-    />
-  </head>
-  <body>
-    <div class="container">
-        <span>This is login page </span>
-        <span>Hi </span>
+    <head>
+        <link
+          rel="stylesheet"
+          href="/static/css/login_register.css"
+        />
+      </head>
+      <div class="container">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="title-container">
+                    <h2>Login</h2>
+                </div>
+                <form id="loginForm" action="{{ url_for('login') }}" method="post">
+                    <div class="form-group" >
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="admin-checkbox-container">
+                            <label>
+                                <input type="checkbox" id="isAdmin" name="isAdmin">
+                                Admin
+                            </label>
+                        </div>
+                    </div>
+                    <input type="hidden" name="message" value="Login Sucessful">
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <div class="link">
+                    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
 </html>
-
 {% endblock %}
+<!-- 
+{% block scripts %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const isAdmin = document.getElementById('isAdmin').checked;
+    const messageDiv = document.getElementById('message');
+    
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password,
+                isAdmin
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            messageDiv.textContent = 'Login successful. Redirecting...';
+            messageDiv.className = 'message success';
+            window.location.href = '/dashboard';
+        } else {
+            messageDiv.textContent = data.message;
+            messageDiv.className = 'message error';
+        }
+    } catch (error) {
+        messageDiv.textContent = 'An error occurred during login';
+        messageDiv.className = 'message error';
+    }
+});
+</script>
+{% endblock %} -->
