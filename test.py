@@ -1,3 +1,4 @@
+
 """
 based on the Example flask-based web application.
 See the README.md file for instructions how to set up and run the app in development mode.
@@ -326,5 +327,4 @@ if __name__ == "__main__":
     FLASK_PORT = os.getenv("FLASK_PORT", "6000")
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
-
     app.run(port=FLASK_PORT)
