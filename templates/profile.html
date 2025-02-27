@@ -35,13 +35,13 @@
             
         </div>
         {% if userInfo.usertype == 0 %}
-        <div class = "wishlist-display-container">
+        <div class = "aptlist-display-container">
             <div class = "subtitle-container">
                 <span class = "subtitle">Wishlist</span>
             </div>
 
             
-            <div class="wishlist-widget-container">
+            <div class="aptlist-widget-container">
                 <ul>
                 {% for apt in houseInfo %}
                 <li>
@@ -74,7 +74,7 @@
         </div>
 
         {% else %}
-        <div class="admin-replace-wishlist-container"></div>
+        <div class="admin-replace-aptlist-container"></div>
         {% endif %}
         
         <div class = "logout-container">

@@ -14,10 +14,15 @@
     <div class="container"> 
       <div class="search-section">
         <form action="{{ url_for('userlist') }}" method="get" class="search-form">
-            <input type="text" name="q" placeholder="Search username..." value="{{ search_term }}">
-            <button type="submit">Search</button>
+          <input type="text" name="q" placeholder="Search user..." value="{{ search_term }}">
+          <button type="submit">Search</button>
         </form>
       </div>
+      {% if target == ''%}
+      <span class="search-result"> </span>
+      {% else %}
+      <span class="search-result">Searched for {{target}}</span>
+      {% endif %}
 
       <div class="user-display-container">
         <div class = "subtitle-container">
@@ -55,9 +60,6 @@
           </ul>
         </div>
       </div>
-
-
-      
     </div>
   </body>
 </html>

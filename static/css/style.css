@@ -93,23 +93,23 @@ footer p{
     font-weight: bolder;
 }
 
-.wishlist-display-container{
+.aptlist-display-container{
     margin-top: 140px;
     margin-bottom: 40px;
 }
 
-.wishlist-widget-container{
+.aptlist-widget-container{
     display: flex;
     flex-direction: column;
     gap:40px;
 }
 
-.wishlist-widget-container>ul{
+.aptlist-widget-container>ul{
     list-style-type:none;
     padding-left: 0px;
 }
 
-.wishlist-widget-container>ul>li{
+.aptlist-widget-container>ul>li{
     margin-bottom:30px;
 }
 
@@ -231,6 +231,50 @@ footer p{
     font-weight: bold;
 }
 
-.admin-replace-wishlist-container{
+.admin-replace-aptlist-container{
     min-height: 900px;
+}
+
+.search-section {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.search-form {
+    display: flex;
+    gap: 30px;
+}
+
+.search-form input {
+    padding: 8px 15px;
+    border: 2px solid #a4a4a4;
+    border-radius: 4px;
+    width: 630px;
+    font-size:40px;
+    font-family: Monaco, Monospace;
+    letter-spacing: -1px;
+    font-size: 40px;
+}
+
+.search-form button {
+    padding: 8px 20px;
+    background: #4a5568;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 100px;
+    font-size:40px;
+    font-family: Monaco, Monospace;
+    font-size: 40px;
+}
+
+.search-result {
+    margin-top: 1rem;
+    color: gray;
+    font-size: 35px;
+    padding-left: 0.5rem;
 }

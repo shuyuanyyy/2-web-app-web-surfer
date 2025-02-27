@@ -15,7 +15,7 @@
     padding: 8px 15px;
     border: 2px solid #a4a4a4;
     border-radius: 4px;
-    width: 400px;
+    width: 630px;
     font-size:40px;
     font-family: Monaco, Monospace;
     letter-spacing: -1px;
@@ -36,6 +36,13 @@
     letter-spacing: -1px;
 }
 
+.search-result {
+    margin-top: 1rem;
+    color: gray;
+    font-size: 35px;
+    padding-left: 0.5rem;
+
+}
 
 .subtitle{
     font-size:70px;

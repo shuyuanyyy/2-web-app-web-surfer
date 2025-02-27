@@ -55,7 +55,7 @@ def create_app():
 
             #if login successfully as a guest
             if (usertype==None):
-                return redirect(url_for("buildinglist"))
+                return redirect(url_for("aptlist"))
             elif (usertype=="on"):
                 return redirect(url_for("admin_dashboard"))
             else:
@@ -108,7 +108,27 @@ def create_app():
                                 "area": "12020",
                                 "available_date": "2025-03-01",
                                 "city":"Jercey City, NJ 11101"
-                               }])
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },])
        
 
     @app.route("/admin_dashboard")
@@ -119,7 +139,8 @@ def create_app():
     def userlist():
         query = request.args.get('q', '')  # Retrieve the 'q' parameter, default to empty string if not provided
         print(f"userlist requests for q: {query}") 
-        return render_template("userlist.html", usersInfo=[{
+        return render_template("userlist.html", target = query,
+                               usersInfo=[{
                                    "username":"Rin",
                                    "usertype":0,
                                    "avatar":"",
@@ -150,9 +171,71 @@ def create_app():
     def search_user():
         return render_template("search-user.html")
 
-    @app.route("/buildinglist")
-    def buildinglist():
-        return render_template("buildinglist.html")
+    @app.route("/aptlist",methods=["GET"])
+    def aptlist():
+        query = request.args.get('q', '')  # Retrieve the 'q' parameter, default to empty string if not provided
+        print(f"userlist requests for q: {query}") 
+        return render_template("aptlist.html",target = query,
+                               houseInfo=[{
+                                "building": "Jackson Park",
+                                "apt_num": "#512",
+                                "price": 1350.50,
+                                "bedroom": "2",
+                                "bathroom": "2",
+                                "area": "1200",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Jackson f",
+                                "apt_num": "#512",
+                                "price": 1350.50,
+                                "bedroom": "Studio",
+                                "bathroom": "Studio",
+                                "area": "12020",
+                                "available_date": "2025-03-01",
+                                "city":"Jercey City, NJ 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },
+                               {
+                                "building": "Tower 28",
+                                "apt_num": "#5312",
+                                "price": 1000.,
+                                "bedroom": "1",
+                                "bathroom": "2",
+                                "area": "1400",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               },])
     
     @app.route("/delete/<user_id>", methods=['POST'])
     def delete_user_q(user_id):
