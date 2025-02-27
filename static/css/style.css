@@ -110,7 +110,7 @@ footer p{
 }
 
 .aptlist-widget-container>ul>li{
-    margin-bottom:30px;
+    margin-bottom:50px;
 }
 
 .apt-widget {
@@ -127,19 +127,53 @@ footer p{
 }
 
 .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: white;
-    border: 1px solid black;
+    position: relative;
+    top: -80px;
+    left: 760px;
+    background: d1d1d1;
+    border: 2px solid black;
     cursor: pointer;
     font-size: 14px;
     padding: 3px;
+    width: 100px;
+    height: 100px;
+    font-size: 80px;
+    font-weight: bold;
 }
 
-.apt-content {
+.delete-icon-container{
     display: flex;
-    letter-spacing: -1px
+    align-items: center;
+    justify-items: center;
+    position: relative;
+    top: -70px;
+    left: 780px;
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+}
+
+.delete-icon-container > form > button{
+    background-color: transparent;
+    border: transparent;
+}
+
+.delete-icon{
+    width: 70px;
+    height: 70px;
+}
+
+.aptlist-apt-content {
+    display: flex;
+    letter-spacing: -1px;
+    margin-top:-100px
+    /* justify-content: space-between;
+    align-items: center; */
+}
+
+.wishlist-apt-content {
+    display: flex;
+    letter-spacing: -1px;
     /* justify-content: space-between;
     align-items: center; */
 }
@@ -277,4 +311,9 @@ footer p{
     color: gray;
     font-size: 35px;
     padding-left: 0.5rem;
+}
+
+a {
+    color: black;
+    text-decoration: none;
 }

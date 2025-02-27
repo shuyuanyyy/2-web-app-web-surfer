@@ -33,28 +33,46 @@
           <ul>
             {% for apt in houseInfo %}
             <li>
+              <a href="{{ url_for('detail', apt_id=apt.price)}}">
               <div class="apt-widget">
+              <!-- if usertype ==1 -->
                 <!-- <button class="close-btn">X</button> -->
-                <div class="apt-content">
-                  <div class="apt-details">
-                    <p class="apt-price">${{apt.price}}/mo</p>
-                    {% if apt.bedroom == "Studio" %}
-                    <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
-                    {% else %}
-                    <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
-                    {% endif %}
-                    <p class="apt-available-date">{{apt.available_date}}</p>
-                    <div class="apt-building-name-apt-num-container">
-                      <span class="apt-building-name">{{apt.building}}</span>
-                      <span class="apt-apt-num">{{apt.apt_num}}</span>
+                <!-- 之后要改！！！！apt_id -->
+                <div class="delete-icon-container">
+                  <!-- <form action="{{ url_for('delete_apt_q', apt_id=apt.price) }}" method="post"> -->
+                  <form action="{{ url_for('delete_apt_q', apt_id=apt.area) }}" method="post">
+                    <input type="hidden" name="apt_id" value="{{apt.price}}">
+                    <button type="submit">
+                      <img src="{{ url_for('static', filename='images/delete-icon.png') }}" alt="Delete" class="delete-icon">
+                    </button>
+                  </form>
+                </div>
+                <!-- <form action = "{{url_for('detail', apt_id=apt.price)}}" method="get">
+                  <input type="hidden" name="apt_id" value="{{apt.price}}">
+                  <button type="submit "> -->
+                  <div class="aptlist-apt-content">
+                    <div class="apt-details">
+                      <p class="apt-price">${{apt.price}}/mo</p>
+                      {% if apt.bedroom == "Studio" %}
+                      <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+                      {% else %}
+                      <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                      {% endif %}
+                      <p class="apt-available-date">{{apt.available_date}}</p>
+                      <div class="apt-building-name-apt-num-container">
+                        <span class="apt-building-name">{{apt.building}}</span>
+                        <span class="apt-apt-num">{{apt.apt_num}}</span>
+                      </div>
                     </div>
+                    <div class="apt-image">
+                        <div class="placeholder">Picture</div>
+                    </div>
+                    </div>
+                    <p class="apt-area">{{apt.city}}</p>
                   </div>
-                  <div class="apt-image">
-                      <div class="placeholder">Picture</div>
-                  </div>
-                  </div>
-                  <p class="apt-area">{{apt.city}}</p>
-              </div>
+                  <!-- </button>
+                </form> -->
+                </a>
             </li>
             {% endfor %}
           </ul>

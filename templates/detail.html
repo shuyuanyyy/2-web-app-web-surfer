@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block container %}
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="/static/css/detail.css"
+    />
+  </head>
+    <body>
+        <div class="container">
+            <!-- <div class="header" type="hidden">
+                <a href="{{ url_for('admin_dashboard') }}" class="back-button" type="hidden">Back to List</a>
+                <div class="user-actions">
+                    <button id="wishlistBtn" class="wishlist-btn" data-apt-id="{{ apt.id }}">
+                        <i class="fas fa-heart" id="heartIcon"></i>
+                        Add to Wishlist
+                    </button>
+                </div> 
+            </div>-->
+        <!-- ######################################### 要先设置左右的test的东西-->
+            <div class="apt-image">
+                <div class="placeholder">Picture</div>
+            </div>
+            <div class="apt-detail-container">
+                <div class="apt-basic-container">
+                    <div class="upper-container">
+                        <h2 class="section-title">{{apt.building.name}} {{apt.apt_num}}</h2>
+                        <div class="apt-price-basic-like-icon-container">
+                            <div class="apt-price-basic-container">
+                                <h1 class="apt-price">${{ apt.price }}/mo</h1>
+                                {% if apt.bedroom == "Studio" %}
+                                <p class="info-item">Studio {{apt.area}} sqft</p>
+                                {% else %}
+                                <p class="info-item">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                                {% endif %}
+                            </div>
+                            <div class="apt-like-icon-container">
+                                {% if user.usertype == 0 %}
+                                <form action="{{ url_for('home') }}" method="post">
+                                    <input type="hidden" name="apt_id" value="{{apt.id}}">
+                                    <button type="submit">
+                                        <img src="{{ url_for('static', filename='images/like-icon.webp') }}" alt="Like" class="like-icon">
+                                    </button>
+                                </form>
+                                {% else %}
+                                <form action="{{ url_for('edit') }}" method="post">
+                                    <input type="hidden" name="apt_id" value="{{apt.id}}">
+                                    <button class="edit-btn" type="submit">
+                                        Edit
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lower-container">
+                        <div class="apt-date-address-listed-email-container">
+                            <div class="apt-date">
+                                <p class="info-item">Available <br> {{ apt.date }}</p>
+                            </div>
+                            <div class="apt-address">
+                                <p class="info-item" id="apt-address-text">{{ apt.street_address }}<br>{{apt.city_address}}</p>
+                            </div>
+                        </div>
+                        <p class="info-item">Listed by: {{ apt.postperson }}</p>
+                    </div>
+                </div>
+
+                
+                <div class="section">
+                    <h2 class="subtitle">About</h2>
+                    <p class="about-item">
+                        {{apt.about_info}}
+                    </p>
+                </div>
+
+
+
+
+                <div class="section">
+                    <h2 class="subtitle">Policies</h2>
+                    <div class = "section-content">
+                        {% for policy, status in apt.policies.items() %}
+                            {% if status == 1 %}
+                            <div class="list-item-container">
+                                <p class="info-item">{{ policy.replace("_", " ") | title }}</p>
+                            </div>
+                            {%endif%}
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <div class="section">
+                    <h2 class="subtitle">Apartment Amenities</h2>
+                    <div class = "section-content">
+                        {% for amenity, status in apt.amenities.items() %}
+                            {% if status == 1 %}
+                            <div class="list-item-container">
+                                <p class="info-item">{{ amenity.replace("_", " ") | title }}</p>
+                            </div>
+                            {%endif%}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="subtitle">Home Features</h2>
+                    <div class = "section-content">
+                        {% for feature, status in apt.features.items() %}
+                            {% if status == 1 %}
+                            <div class="list-item-container">
+                                <p class="info-item">{{ feature.replace("_", " ") | title }}</p>
+                            </div>
+                            {%endif%}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="section">
+                <h2 class="subtitle">{{apt.building.name}}</h2>
+                <div class="building-basic-info">
+                    <!-- need to revise -->
+                    <p class="about-item">Address: {{ apt.building.address }}</p>
+                    <p class="about-item">Number of Units: {{ apt.building.num_unit }}</p>
+                    <p class="about-item">About: {{ apt.building.about_info }}</p>
+                </div>
+            </div>
+<!--             
+            <div class="debug-info">
+                <p>apt: {{ apt }}</p>
+                <p>Amenities: {{ apt.amenities }}</p>
+                <p>Features: {{ apt.features }}</p>
+                <p>Policies: {{ apt.policies }}</p>
+            </div> -->
+        </div>
+    </body>
+</html>
+
+<!-- 添加 Font Awesome 图标库 -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+
+<!-- <script>
+document.getElementById('wishlistBtn').addEventListener('click', async function() {
+    const aptId = this.getAttribute('data-apt-id');
+    try {
+        const response = await fetch('/api/wishlist/toggle', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                apt_id: aptId
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            const btn = document.getElementById('wishlistBtn');
+            const icon = document.getElementById('heartIcon');
+            
+            if (data.added) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-heart" id="heartIcon"></i> Added to Wishlist';
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-heart" id="heartIcon"></i> Add to Wishlist';
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+</script> -->
+{% endblock %} 

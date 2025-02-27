@@ -59,6 +59,7 @@
     flex-direction: row;
     gap: 20px;
 }
+
 /* 
 .delete-btn{
     padding: 8px 20px;
@@ -102,13 +103,13 @@
     margin:5px;
 }
 
-.delete-icon-container{
+.user-delete-icon-container{
     display: flex;
     align-items: center;
     justify-items: center;
 }
 
-.delete-icon-container > form > button{
+.user-delete-icon-container > form > button{
     background-color: transparent;
     border: transparent;
 }

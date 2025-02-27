@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+    <head>
+        <link
+          rel="stylesheet"
+          href="/static/css/admin-building-edit.css"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <!-- <div class="header">
+                <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
+                <div class="user-info">
+                    <span>Admin: {{ user.username }}</span>
+                </div>
+            </div> -->
+
+            <div class="apt-detail">
+                <!-- <form id="aptEditForm", action="{{url_for('update_apt_q', apt_id=apt.id)}}" method="post" data-apt-id="{{ apt.id }}"> -->
+                <form id="aptEditForm">
+                    <div class="section">
+                        <h2 class="section-title">Basic Info</h2>
+                        <div class="form-group">
+                            <label>Building Name</label>
+                            <input type="text" name="buildingName" value="{{ apt.building.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Apartment Number</label>
+                            <input type="text" name="apt_num" value="{{ apt.apt_num }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
+                            <input type="text" name="price" value="{{ apt.price }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Square Feet</label>
+                            <input type="number" name="area" value="{{ apt.area }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Available Date</label>
+                            <input type="text" name="date" value="{{ apt.date }}">
+                        </div>
+                        <div class="form-group">
+                            <label>Street Address</label>
+                            <input type="text" name="street_address" value="{{ apt.street_address }}">
+                        </div>
+                        <div class="form-group">
+                            <label>City, State and Zip Code</label>
+                            <input type="text" name="city_address" value="{{ apt.city_address }}">
+                        </div>
+                        <div class="form-group">
+                            <label>About:</label>
+                            <textarea name="about_info">{{ apt.about_info }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Policies</h2>
+                        <div class = "section-content">
+                            {% for policy, status in apt.policies.items() %}
+                                <div class="list-item-container">
+                                    <label class="list-item-label">
+                                        <input type="checkbox" name="{{policy}}" {% if status == 1 %}checked{% endif %}>
+                                        {{policy}}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+
+                    <div class="section">
+                        <h2 class="section-title">Apartment Amenities</h2>
+                        <div class = "section-content">
+                            {% for amenity, status in apt.amenities.items() %}
+                                <div class="list-item-container">
+                                    <label class="list-item-label">
+                                        <input type="checkbox" name="{{amenity}}" {% if status == 1 %}checked{% endif %}>
+                                        {{amenity}}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Home Features</h2>
+                        <div class = "section-content">
+                            {% for feature, status in apt.features.items() %}
+                                <div class="list-item-container">
+                                    <label class="list-item-label">
+                                        <input type="checkbox" name="{{feature}}" {% if status == 1 %}checked{% endif %}>
+                                        {{feature}}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="confirmation-button-container">
+                        <input type="hidden" name="id" value="{{apt.id}}">
+                        <button type="submit" class="save-btn">Save</button>
+                        <button class="cancel-btn">
+                            <nav>
+                              <a href="{{ url_for('aptlist')}}">Cancel</a>
+                            </nav>
+                        </button>
+                    </div>
+                       
+                </form>
+            </div>
+        </div>
+    </body>
+<script>
+document.getElementById('aptEditForm').addEventListener('submit', async (e) => {
+    // e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const aptData = {
+            "id":formData.get('id'),
+            "building": formData.get('buildingName'),
+            "apt_num": formData.get('apt_num'),
+            "price": formData.get('price'),
+            "bedroom": formData.get('bedroom'),
+            "bathroom": formData.get('bathroom'),
+            "area": parseInt(formData.get('area')),
+            "available_date": formData.get('date'),
+            "street_address": formData.get('street_address'),
+            "city_address": formData.get('city_address'),
+            "about_info": formData.get('about_info'),
+            //add post person if needed
+            "amenities": {
+            "doorman": formData.get('doorman') ? 1 : 0,
+            "bikeroom": formData.get('bikeroom') ? 1 : 0,
+            "elevator": formData.get('elevator') ? 1 : 0,
+            "laundry": formData.get('laundry') ? 1 : 0,
+            "gym": formData.get('gym') ? 1 : 0,
+            "package_room": formData.get('package_room') ? 1 : 0,
+            "parking": formData.get('parking') ? 1 : 0,
+            "library": formData.get('library') ? 1 : 0
+            },
+            "features": {
+                "centralair": formData.get('centralair') ? 1 : 0,
+                "dishwasher": formData.get('dishwasher') ? 1 : 0,
+                "view": formData.get('view') ? 1 : 0,
+                "hardwoodfloor": formData.get('hardwoodfloor') ? 1 : 0,
+                "fridge": formData.get('fridge') ? 1 : 0,
+                "privateoutdoor": formData.get('privateoutdoor') ? 1 : 0,
+                "oven": formData.get('oven') ? 1 : 0,
+                "washerdryer": formData.get('washerdryer') ? 1 : 0
+            },
+            "policies": {
+                "pet_allowed": formData.get('pet_allowed') ? 1 : 0,
+                "guarantor_accepted": formData.get('guarantor_accepted') ? 1 : 0,
+                "smoke_free": formData.get('smoke_free') ? 1 : 0
+            }};
+
+    // const aptData = {
+    //     "id": document.getElementByName("id").value,
+    //     "building": document.getElementByName("buildingName").value,
+    //     "apt_num": document.getElementByName("apt_num").value,
+    //     "price": document.getElementByName("price").value,
+    //     "bedroom": document.getElementByName("bedroom").value,
+    //     "bathroom": document.getElementByName("bathroom").value,
+    //     "area": parseInt(document.getElementByName("area").value) || 0,
+    //     "available_date": document.getElementByName("date").value,
+    //     "street_address": document.getElementByName("street_address").value,
+    //     "city_address": document.getElementByName("city_address").value,
+    //     "about_info": document.getElementByName("about_info").value,
+    //     "amenities": {
+    //         "doorman": document.getElementByName("doorman").checked ? 1 : 0,
+    //         "bikeroom": document.getElementByName("bikeroom").checked ? 1 : 0,
+    //         "elevator": document.getElementByName("elevator").checked ? 1 : 0,
+    //         "laundry": document.getElementByName("laundry").checked ? 1 : 0,
+    //         "gym": document.getElementByName("gym").checked ? 1 : 0,
+    //         "package_room": document.getElementByName("package_room").checked ? 1 : 0,
+    //         "parking": document.getElementByName("parking").checked ? 1 : 0,
+    //         "library": document.getElementByName("library").checked ? 1 : 0
+    //     },
+    //     "features": {
+    //         "centralair": document.getElementByName("centralair").checked ? 1 : 0,
+    //         "dishwasher": document.getElementByName("dishwasher").checked ? 1 : 0,
+    //         "view": document.getElementByName("view").checked ? 1 : 0,
+    //         "hardwoodfloor": document.getElementByName("hardwoodfloor").checked ? 1 : 0,
+    //         "fridge": document.getElementByName("fridge").checked ? 1 : 0,
+    //         "privateoutdoor": document.getElementByName("privateoutdoor").checked ? 1 : 0,
+    //         "oven": document.getElementByName("oven").checked ? 1 : 0,
+    //         "washerdryer": document.getElementByName("washerdryer").checked ? 1 : 0
+    //     },
+    //     "policies": {
+    //         "pet_allowed": document.getElementByName("pet_allowed").checked ? 1 : 0,
+    //         "guarantor_accepted": document.getElementByName("guarantor_accepted").checked ? 1 : 0,
+    //         "smoke_free": document.getElementByName("smoke_free").checked ? 1 : 0
+    //     }
+    // };
+
+    const stringifiedData=JSON.stringify(aptData);
+    // "message": "Data updated successfully!",
+    console.log(stringifiedData);
+   
+    try {
+        const response = await fetch(`/update/${aptId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: stringifiedData
+        });
+        
+        
+        const data = await response.json();
+        window.location.href = `/update/${aptId}`;
+        if (data.success) {
+            // alert('Changes saved successfully!');
+            // location.reload();
+        } else {
+            // alert('Error saving changes: ' + data.message);
+        }
+    } catch (error) {
+        // alert('Error saving changes: ' + error.message);
+    }
+});
+</script>
+{% endblock %} 
