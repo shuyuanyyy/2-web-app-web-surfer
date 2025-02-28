@@ -28,7 +28,7 @@ def create_app():
 
     app = Flask(__name__, 
                 template_folder=os.path.abspath("../templates"),
-                static_folder=os.path.abspath("static"))
+                static_folder=os.path.abspath("../static"))
     # load flask config from env variables
     app.secret_key = "SWE_Project2"
     config = dotenv_values()
