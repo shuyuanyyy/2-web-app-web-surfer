@@ -19,67 +19,6 @@ from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()  # load environment variables from .env file
 
-def convert_submitted_form_to_dict(form_data):
-    # Convert ImmutableMultiDict to a normal dictionary
-    data = form_data.to_dict(flat=True)
-
-    # Convert checkboxes ('on' -> 1, missing -> 0)
-    def checkbox_to_int(field):
-        return 1 if data.get(field) == "on" else 0
-
-    # Construct the structured JSON-like dictionary
-    apt = {
-        "id": data.get("id", ""),
-        "street_address": data.get("street_address", ""),
-        "city_address": data.get("city_address", ""),
-        "apt_num": data.get("apt_num", ""),
-        "price": int(data.get("price", 0)),
-        "bedroom": 1,  # Default value
-        "bathroom": 1,  # Default value
-        "area": int(data.get("area", 0)),
-        "date": data.get("date", ""),
-        "postperson": "Rin",  # Hardcoded value
-        "about_info": data.get("about_info", ""),
-        "policies": {
-            "pet_allowed": checkbox_to_int("pet_allowed"),
-            "guarantor_accepted": checkbox_to_int("guarantor_accepted"),
-            "smoke_free": checkbox_to_int("smoke_free"),
-        },
-        "amenities": {
-            "doorman": checkbox_to_int("doorman"),
-            "bikeroom": checkbox_to_int("bikeroom"),
-            "elevator": checkbox_to_int("elevator"),
-            "laundry": checkbox_to_int("laundry"),
-            "gym": checkbox_to_int("gym"),
-            "package_room": checkbox_to_int("package_room"),
-            "parking": checkbox_to_int("parking"),
-            "library": checkbox_to_int("library"),
-        },
-        "features": {
-            "centralair": checkbox_to_int("centralair"),
-            "dishwasher": checkbox_to_int("dishwasher"),
-            "view": checkbox_to_int("view"),
-            "hardwoodfloor": checkbox_to_int("hardwoodfloor"),
-            "fridge": checkbox_to_int("fridge"),
-            "privateoutdoor": checkbox_to_int("privateoutdoor"),
-            "oven": checkbox_to_int("oven"),
-            "washerdryer": checkbox_to_int("washerdryer"),
-        },
-        "building": {
-            "name": data.get("buildingName", ""),
-            "num_unit": 123213,  # Hardcoded value
-            "address": "building address",  # Hardcoded value
-            "about_info": ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
-                           "In at sem cursus, fringilla lectus eu, ultrices dolor. "
-                           "Nam consequat metus libero, viverra tincidunt tortor efficitur porta. "
-                           "In id volutpat arcu.")
-        }
-    }
-
-    return apt
-
-
-
 
 def create_app():
     """
@@ -101,130 +40,20 @@ def create_app():
     # except Exception as e:
     #     print(" * MongoDB connection error:", e)
 
+<<<<<<< HEAD
     @app.route("/",methods = ["POST","GET"])
     def home():
         message_from_req= request.form.get('message')
         if(message_from_req==None):
             message_from_req = request.args.get('message', '')
-
+            
         return render_template("rinbase.html",message=message_from_req)
-    
-    
-    @app.route("/apt_create",methods = ["POST","GET"])
-    def create():
-        #不知道能不能先生成一个id然后一起传进去create?
-        #这样，在save之后会比较方便前端跳转comfirmation page
-        #如果不行的话可能要改改逻辑或者route？
-        return render_template("admin_apt_detail_edit.html", message = "post",
-                               user={
-                                   "username":"Rin",
-                                   "usertype":0,
-                                   "avatar":"",
-                                   "email":"yq2290@nyu.edu"
-                               },
-                               apt = {"id": "hjlkjdlssDJSLDJ",
-                                "street_address": "",
-                                "city_address": "",
-                                "apt_num": "",
-                                "price":"",
-                                "bedroom":"",
-                                "bathroom":"",
-                                "area":"",
-                                "date":"",
-                                "postperson":"",
-                                "about_info": "",
-                                "policies": {
-                                    "pet_allowed": 0,
-                                    "guarantor_accepted": 0,
-                                    "smoke_free": 0
-                                },
-                                "amenities": {
-                                    "doorman": 0,
-                                    "bikeroom": 0,
-                                    "elevator": 0,
-                                    "laundry": 0,
-                                    "gym": 0,
-                                    "package_room": 0,
-                                    "parking": 0,
-                                    "library": 0
-                                },
-                                "features": {
-                                    "centralair": 0,
-                                    "dishwasher": 0,
-                                    "view": 0,
-                                    "hardwoodfloor": 0,
-                                    "fridge": 0,
-                                    "privateoutdoor": 0,
-                                    "oven": 0,
-                                    "washerdryer": 0
-                                },
-                                "building":{
-                                    "name":"",
-                                    "num_unit": 0,
-                                    "address":"",
-                                    "about_info":""
-                                }})
-    
-    @app.route("/apt_edit",methods = ["POST","GET"])
-    def edit():
-        message_from_req= request.form.get('message')
-        if(message_from_req==None):
-            message_from_req = request.args.get('message', '')
-        if request.method == 'POST':
-            apt_id = request.form.get('id')
-            print(apt_id)
-        
-        #会从detail page收到要edit的aptid
-        #理论上需要从数据库里面再拿一遍所有数据出来，再像下面一样通过render_template传进html里面
-        return render_template("admin_apt_detail_edit.html",
-                               user={
-                                   "username":"Rin",
-                                   "usertype":0,
-                                   "avatar":"",
-                                   "email":"yq2290@nyu.edu"
-                               },
-                                apt = {"id": "101dafsdfasdfeafdr2eqr",
-                                "street_address": "123 Main St",
-                                "city_address": "New York, NY 10001",
-                                "apt_num": "16K",
-                                "price":1350,
-                                "bedroom":1,
-                                "bathroom":1,
-                                "area":123123,
-                                "date":"05/16/2025",
-                                "postperson":"Rin",
-                                "about_info": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at sem cursus, fringilla lectus eu, ultrices dolor. Nam consequat metus libero, viverra tincidunt tortor efficitur porta. In id volutpat arcu. Proin gravida massa ut tincidunt egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vitae mollis mi. Integer lacus augue, tristique non tristique finibus, venenatis vitae eros. In hac habitasse platea dictumst. Ut laoreet, felis eu mattis tempus, lacus felis placerat justo, nec vehicula risus orci non orci. Quisque sodales eros a accumsan tristique. Ut efficitur nunc nec neque euismod, quis posuere ex molestie. Duis gravida vulputate posuere. Duis lacinia, magna ac elementum feugiat, lectus tellus pulvinar orci, eu viverra nulla velit ac felis. Etiam egestas quam ac orci gravida lacinia. Suspendisse sagittis nisi mauris, sed hendrerit velit imperdiet ac. Maecenas nec eleifend dolor.",
-                                "policies": {
-                                    "pet_allowed": 1,
-                                    "guarantor_accepted": 1,
-                                    "smoke_free": 1
-                                },
-                                "amenities": {
-                                    "doorman": 1,
-                                    "bikeroom": 1,
-                                    "elevator": 1,
-                                    "laundry": 1,
-                                    "gym": 1,
-                                    "package_room": 0,
-                                    "parking": 1,
-                                    "library": 1
-                                },
-                                "features": {
-                                    "centralair": 1,
-                                    "dishwasher": 1,
-                                    "view": 1,
-                                    "hardwoodfloor": 1,
-                                    "fridge": 1,
-                                    "privateoutdoor": 1,
-                                    "oven": 1,
-                                    "washerdryer": 1
-                                },
-                                "building":{
-                                    "name":"Luxury High-Rise Apartment",
-                                    "num_unit": 123213,
-                                    "address":"building address",
-                                    "about_info":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at sem cursus, fringilla lectus eu, ultrices dolor. Nam consequat metus libero, viverra tincidunt tortor efficitur porta. In id volutpat arcu. "
-                                }})
+=======
+    @app.route("/")
+    def home():
+
+        return render_template("rinbase.html")
+>>>>>>> 4afb7ef11f5d072f7b170488e1f4d879cf7d76b4
     
     @app.route("/login",methods=["POST","GET"])
     def login():
@@ -248,6 +77,7 @@ def create_app():
     @app.route("/register",methods=["POST","GET"])
     def register():
         return render_template("register.html")
+
 
     
     @app.route("/profile")
@@ -350,16 +180,11 @@ def create_app():
     @app.route("/search_user")
     def search_user():
         return render_template("search-user.html")
+<<<<<<< HEAD
     
     @app.route("/detail/<apt_id>", methods=["GET"])
     def detail(apt_id):
-        return render_template("detail.html",
-                                user={
-                                   "username":"Rin",
-                                   "usertype":1,
-                                   "avatar":"",
-                                   "email":"yq2290@nyu.edu"
-                               },
+        return render_template("detail.html",user = {"username": "JohnDoe"},
                                 apt = {"id": "101dafsdfasdfeafdr2eqr",
                                 "street_address": "123 Main St",
                                 "city_address": "New York, NY 10001",
@@ -402,6 +227,8 @@ def create_app():
                                     "address":"building address",
                                     "about_info":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at sem cursus, fringilla lectus eu, ultrices dolor. Nam consequat metus libero, viverra tincidunt tortor efficitur porta. In id volutpat arcu. "
                                 }})
+=======
+>>>>>>> 4afb7ef11f5d072f7b170488e1f4d879cf7d76b4
 
     @app.route("/aptlist",methods=["GET"])
     def aptlist():
@@ -480,7 +307,11 @@ def create_app():
 
 
         print("req post for delete user from Userlist")
+<<<<<<< HEAD
         return render_template("delete-user.html", q_message = "Are you sure that you want to detele this user?",
+=======
+        return render_template("delete-user.html", q_message = "Are you sure that you want to detele this user",
+>>>>>>> 4afb7ef11f5d072f7b170488e1f4d879cf7d76b4
                                username=username,
                                email=email)
     
@@ -490,6 +321,7 @@ def create_app():
         print("req get for delete user from Userlist")
         return render_template("delete-user.html", username=user_id)
     
+<<<<<<< HEAD
     @app.route("/delete/apt/<apt_id>", methods=['POST'])
     def delete_apt_q(apt_id):
         if request.method == 'POST':
@@ -501,7 +333,6 @@ def create_app():
         print("req post for delete apt from Aptlist")
         return render_template("delete-apt.html", q_message = "Are you sure that you want to detele this apartment?",
                                apt={
-                                "id":"afdsafsdfasdf",
                                 "building": "Jackson Park",
                                 "apt_num": "#512",
                                 "price": 1350.50,
@@ -512,53 +343,9 @@ def create_app():
                                 "city":"Long Island City, NY 11101"
                                })
     
-    @app.route("/update/apt/<apt_id>", methods=["GET",'POST'])
-    def update_apt_q(apt_id):
-        if request.method == 'POST':
-            data = convert_submitted_form_to_dict(request.form)
-            print(data)
 
-            #update data here
-
-
-        print("req post for update apt from apt update")
-        return render_template("update-apt.html", q_message = "Are you sure that you want to update this apartment?",
-                               apt={
-                                "id":"afdsafsdfasdf",
-                                "building": "Jackson Park",
-                                "apt_num": "#512",
-                                "price": 1350.50,
-                                "bedroom": "2",
-                                "bathroom": "2",
-                                "area": "1200",
-                                "available_date": "2025-06-01",
-                                "city":"Long Island City, NY 11101"
-                               })
-
-    @app.route("/create/apt/<apt_id>", methods=["GET",'POST'])
-    def create_apt_q(apt_id):
-        if request.method == 'POST':
-            data = convert_submitted_form_to_dict(request.form)
-            print(data)
-
-            #update data here
-
-
-        print("req post for update apt from apt update")
-        return render_template("update-apt.html", q_message = "Are you sure that you want to create this apartment?",
-                               message="post",
-                               apt={
-                                "id":"afdsafsdfasdf",
-                                "building": "Jackson Park",
-                                "apt_num": "#dafsdf",
-                                "price": 1350.50,
-                                "bedroom": "2",
-                                "bathroom": "2",
-                                "area": "1200",
-                                "available_date": "2025-06-01",
-                                "city":"Long Island City, NY 11101"
-                               })
-
+=======
+>>>>>>> 4afb7ef11f5d072f7b170488e1f4d879cf7d76b4
     @app.route("/message", methods=['POST','GET'])
     def message():
         message_from_req= request.form.get('message')
@@ -577,6 +364,7 @@ def create_app():
             # can retrieve user id if needed
             # if success, proceed with message user deleted
             # else, change the message and show the user that the deletion failed
+<<<<<<< HEAD
 # 
         if message_from_req == "Apartment Deleted":
             # id = request.form.get('id')
@@ -586,6 +374,8 @@ def create_app():
             # can retrieve user id if needed
             # if success, proceed with message user deleted
             # else, change the message and show the user that the deletion failed
+=======
+>>>>>>> 4afb7ef11f5d072f7b170488e1f4d879cf7d76b4
 
         if message_from_req == "Registration Sucessful":
             username = request.form.get('username')
@@ -601,14 +391,6 @@ def create_app():
             
             redirectAddress=url_for("login")
             # process the submitted data here
-        
-        if message_from_req == "Apartment Created":
-            id =request.form.get('id')
-            redirectAddress=url_for('detail', apt_id=id)
-
-        if message_from_req == "Apartment Updated":
-            id =request.form.get('id')
-            redirectAddress=url_for('detail', apt_id=id)
         
         
         
@@ -729,5 +511,3 @@ if __name__ == "__main__":
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
     app.run(port=FLASK_PORT)
-
-

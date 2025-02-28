@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for, session
 from models import House, Policy, HomeFeature, BuildingAmenity, UserInformation, Building
 from bson import ObjectId
 
@@ -110,7 +111,8 @@ def get_houses():
             "address": house.address,
             "picture": house.picture
         })
-    return jsonify(house_list), 200
+    return render_template("aptlist.html", houseInfo=house_list)
+
 
 #get details of a specific house
 @house_bp.route('/<house_id>', methods=['GET'])

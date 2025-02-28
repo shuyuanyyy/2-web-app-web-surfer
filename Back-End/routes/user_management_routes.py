@@ -1,10 +1,17 @@
 from flask import Blueprint, jsonify, request
+from flask import render_template, redirect, url_for, flash
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import UserInformation, Wishlist, House
 from bson import ObjectId
 
 user_management_bp = Blueprint("user_management", __name__)
 
+@user_management_bp.route('/dashboard', methods=['GET'])
+@jwt_required()
+def admin_dashboard():
+    current_user = get_jwt_identity()
+    admin_user = UserInformation.objects(username=current_user).first()
+    return render_template("admin-dashboard.html", admin=admin_user)
 
 # get all users list
 @user_management_bp.route('/list', methods=['GET'])
@@ -33,7 +40,7 @@ def get_all_users():
             "avatar": user.avatar
         })
 
-    return jsonify(user_list), 200
+    return render_template("userlist.html", users=user_list)
 
 
 # detailed information of a single user
@@ -94,54 +101,6 @@ def delete_user(user_id):
 
     return jsonify({"message": "User deleted successfully"}), 200
 
-
-# update user information
-@user_management_bp.route('/update/<user_id>', methods=['PUT'])
-@jwt_required()
-def update_user(user_id):
-    current_user = get_jwt_identity()
-    requesting_user = UserInformation.objects(username=current_user).first()
-
-    if not requesting_user:
-        return jsonify({"error": "User not found"}), 404
-
-    try:
-        user_to_update = UserInformation.objects(id=ObjectId(user_id)).first()
-    except:
-        return jsonify({"error": "Invalid user ID format"}), 400
-
-    if not user_to_update:
-        return jsonify({"error": "User to update not found"}), 404
-        
-    # check if user is updating their own profile or is an admin
-    is_own_profile = str(requesting_user.id) == user_id
-    is_admin = requesting_user.usertype == 1
-    
-    if not (is_own_profile or is_admin):
-        return jsonify({"error": "Permission denied: You can only update your own profile or be an admin"}), 403
-
-    data = request.json
-
-    if 'username' in data and data['username'] != user.username:
-        existing_user = UserInformation.objects(username=data['username']).first()
-        if existing_user:
-            return jsonify({"error": "Username already exists"}), 400
-
-    # check if email already exists if update it
-    if 'email' in data and data['email'] != user.email:
-        existing_email = UserInformation.objects(email=data['email']).first()
-        if existing_email:
-            return jsonify({"error": "Email already exists"}), 400
-
-    #not allow direct password updates, should have a separate password change endpoint
-    if 'password' in data:
-        del data['password']
-
-    try:
-        user.update(**data)
-        return jsonify({"message": "User updated successfully"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 
 # get user's wishlist
