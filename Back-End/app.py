@@ -1,4 +1,4 @@
-from flask import Flask
+""" from flask import Flask
 from flask_jwt_extended import JWTManager
 from mongoengine import connect
 
@@ -21,4 +21,4 @@ app.register_blueprint(building_bp, url_prefix="/building")
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) """

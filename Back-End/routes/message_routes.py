@@ -10,5 +10,5 @@ message_bp = Blueprint("message", __name__)
 def get_message():
     message = request.args.get("message", "No message provided")  
     redirectWebsite = request.args.get("redirect", "/")  
-
+    #print(f"DEBUG: Message page accessed with message='{message}' and redirect='{redirectWebsite}'") 
     return render_template("message.html", message=message, redirectWebsite=redirectWebsite)

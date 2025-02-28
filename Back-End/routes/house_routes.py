@@ -18,7 +18,7 @@ house_bp = Blueprint("house", __name__)
 def create_house():
     data = request.json
     current_user = get_jwt_identity()
-    posted_admin = UserInformation.objects(username = current_user).first()
+    posted_admin = current_user
 
     #check if the user exists
     if not posted_admin:
@@ -92,16 +92,17 @@ def create_house():
 
 #show all houses
 @house_bp.route('/list', methods=['GET'])
-def get_houses():
+def get_all_houses():
     #only show part of the data in houses
     houses = House.objects.only(
-        "building", "price", "bedroom", 
+        "apt_num","building", "price", "bedroom", 
         "bathroom", "area", "available_date", "address", "picture"
     )
 
     house_list = []
     for house in houses:
         house_list.append({
+            "apt_num": house.apt_num,
             "building" : house.building,
             "price": house.price,
             "bedroom": house.bedroom,
@@ -117,10 +118,10 @@ def get_houses():
 #get details of a specific house
 @house_bp.route('/<house_id>', methods=['GET'])
 def get_house(house_id):
-    house = House.objects(id=ObjectId(house_id)).first()
+    house = House.objects(apt_num=house_id).first()
     #house = House.objects(id=house_id).first()
     try:
-        house = House.objects(id=ObjectId(house_id)).first()
+        house = House.objects(apt_num=house_id).first()
     except:
         return jsonify({"error": "Invalid house ID format"}), 400
     if not house:
@@ -135,7 +136,7 @@ def get_house(house_id):
         "area": house.area,
         "available_date": house.available_date.strftime("%Y-%m-%d") if house.available_date else None,
         "address": house.address,
-        "posted_admin": house.posted_admin.username if house.posted_admin else None,
+        "posted_admin": house.posted_admin,
         "about_info": house.about_info,
         "policy": {
             "pet_allowed": house.policy.pet_allowed,
@@ -177,10 +178,11 @@ def get_house(house_id):
             'about_info': building.about_info
         }
 
-    return jsonify({
-        "house": house_data,
-        "building": building_info
-    }), 200
+    #return jsonify({
+    #    "house": house_data,
+    #    "building": building_info
+    #}), 200
+    return render_template("detail.html", apt = house, building=building)
 
 #update house information
 @house_bp.route('/update/<house_id>', methods=['PUT'])

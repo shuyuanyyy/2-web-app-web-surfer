@@ -39,8 +39,7 @@ def create_app():
     app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
     app.config["SESSION_TYPE"] = "filesystem"
     jwt = JWTManager(app)
-    PUBLIC_ROUTES = ["login.login", "login.register", "static", "home"]
-
+    PUBLIC_ROUTES = ["login.login", "login.register", "static", "home", "message.get_message"]
 
     @app.before_request
     def restricted_access():
@@ -54,7 +53,8 @@ def create_app():
                 verify_jwt_in_request()
                 get_jwt_identity()
             except:
-                return redirect(url_for("login.login"))
+                return redirect(url_for("message.get_message",message="Please login first",redirect=url_for("login.login")))
+                #return redirect(url_for("login.login"))
 
     app.register_blueprint(login_bp, url_prefix="/login")
     app.register_blueprint(house_bp, url_prefix="/house")

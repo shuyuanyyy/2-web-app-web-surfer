@@ -10,16 +10,6 @@
   </head>
     <body>
         <div class="container">
-            <!-- <div class="header" type="hidden">
-                <a href="{{ url_for('admin_dashboard') }}" class="back-button" type="hidden">Back to List</a>
-                <div class="user-actions">
-                    <button id="wishlistBtn" class="wishlist-btn" data-apt-id="{{ apt.id }}">
-                        <i class="fas fa-heart" id="heartIcon"></i>
-                        Add to Wishlist
-                    </button>
-                </div> 
-            </div>-->
-        <!-- ######################################### 要先设置左右的test的东西-->
             <div class="apt-image">
                 <div class="placeholder">Picture</div>
             </div>
@@ -56,7 +46,7 @@
                                 <p class="info-item" id="apt-address-text">{{ apt.street_address }}<br>{{apt.city_address}}</p>
                             </div>
                         </div>
-                        <p class="info-item">Listed by: {{ apt.postperson }}</p>
+                        <p class="info-item">Listed by: {{ apt.posted_admin }}</p>
                     </div>
                 </div>
 
@@ -73,51 +63,144 @@
 
                 <div class="section">
                     <h2 class="subtitle">Policies</h2>
-                    <div class = "section-content">
-                        {% for policy, status in apt.policies.items() %}
-                            {% if status == 1 %}
-                            <div class="list-item-container">
-                                <p class="info-item">{{ policy.replace("_", " ") | title }}</p>
-                            </div>
-                            {%endif%}
-                        {% endfor %}
+                    <div class="section-content">
+                        {% if apt.policy %}
+                            {% if apt.policy.allows_pets %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Allows Pets</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.policy.allows_smoking %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Allows Smoking</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.policy.has_parking %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Has Parking</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p>No policies available.</p>
+                        {% endif %}
                     </div>
                 </div>
 
 
                 <div class="section">
                     <h2 class="subtitle">Apartment Amenities</h2>
-                    <div class = "section-content">
-                        {% for amenity, status in apt.amenities.items() %}
-                            {% if status == 1 %}
-                            <div class="list-item-container">
-                                <p class="info-item">{{ amenity.replace("_", " ") | title }}</p>
-                            </div>
-                            {%endif%}
-                        {% endfor %}
+                    <div class="section-content">
+                        {% if apt.amenities %}
+                            {% if apt.amenities.doorman %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Doorman</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.bikeroom %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Bike Room</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.elevator %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Elevator</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.laundry %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Laundry</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.gym %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Gym</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.packageroom %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Package Room</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.parking %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Parking</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.concierge %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Concierge</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.amenities.library %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Library</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p>No amenities available.</p>
+                        {% endif %}
                     </div>
                 </div>
+                
 
                 <div class="section">
                     <h2 class="subtitle">Home Features</h2>
-                    <div class = "section-content">
-                        {% for feature, status in apt.features.items() %}
-                            {% if status == 1 %}
-                            <div class="list-item-container">
-                                <p class="info-item">{{ feature.replace("_", " ") | title }}</p>
-                            </div>
-                            {%endif%}
-                        {% endfor %}
+                    <div class="section-content">
+                        {% if apt.home_feature %}
+                            {% if apt.home_feature.centralair %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Central Air</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.dishwasher %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Dishwasher</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.hardwoodfloor %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Hardwood Floor</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.view %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Scenic View</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.privateoutdoor %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Private Outdoor Space</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.washerdryer %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Washer & Dryer</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.fridge %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Refrigerator</p>
+                                </div>
+                            {% endif %}
+                            {% if apt.home_feature.oven %}
+                                <div class="list-item-container">
+                                    <p class="info-item">Oven</p>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <p>No home features available.</p>
+                        {% endif %}
                     </div>
                 </div>
+                
 
                 <div class="section">
-                <h2 class="subtitle">{{apt.building.name}}</h2>
+                <h2 class="subtitle">{{building.name}}</h2>
                 <div class="building-basic-info">
                     <!-- need to revise -->
-                    <p class="about-item">Address: {{ apt.building.address }}</p>
-                    <p class="about-item">Number of Units: {{ apt.building.num_unit }}</p>
-                    <p class="about-item">About: {{ apt.building.about_info }}</p>
+                    <p class="about-item">Address: {{ building.address }}</p>
+                    <p class="about-item">Number of Units: {{ building.num_unit }}</p>
+                    <p class="about-item">About: {{ building.about_info }}</p>
                 </div>
             </div>
 <!--             
