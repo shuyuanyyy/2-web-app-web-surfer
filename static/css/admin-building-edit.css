@@ -27,15 +27,22 @@ body{
     letter-spacing: -1px;
 }
 
-.form-group input,
-.form-group select {
+form-group input {
     width: 96%;
     padding: 5px 15px;
     border: 1px solid gray;
     border-radius: 10px;
     height: 70px;
     font-size: 40px;
+}
 
+.form-group select{
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 90px;
+    font-size: 40px;
 }
 
 .form-group textarea{
