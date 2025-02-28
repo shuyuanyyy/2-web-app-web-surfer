@@ -67,7 +67,7 @@ class House(Document):
     area = StringField(required=True)
     available_date = DateTimeField(required=True)
     address = StringField(required=True)
-    posted_admin = ReferenceField(UserInformation, required=True)
+    posted_admin = StringField(required=True)
     about_info = StringField()
     policy = ReferenceField(Policy, required=True)
     home_feature = ReferenceField(HomeFeature, required=True)

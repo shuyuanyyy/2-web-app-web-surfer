@@ -18,7 +18,8 @@ def register():
     existing_user = UserInformation.objects(username=data["username"]).first()
     if existing_user:
         #return jsonify({"error": "Username already exists"}), 400
-        return render_template("register.html", error="Username already exists")
+        return redirect(url_for("message.get_message",message="Username already exists",redirect=url_for("login.register")))
+        #return render_template("register.html", error="Username already exists")
     
     new_user = UserInformation(
         username = data['username'],
@@ -30,8 +31,9 @@ def register():
 
     #return jsonify({
     #    "message": "User registered successfully"
-    #    }), 201   
-    return redirect(url_for('login.login')) 
+    #    }), 201 
+    return redirect(url_for("message.get_message",message="Username register successfully",redirect=url_for("login.login")))
+    #return redirect(url_for('login.login')) 
 
 #User Login
 @login_bp.route('/login', methods=['GET', 'POST'])
@@ -44,11 +46,11 @@ def login():
     if not user:
         #return jsonify({"error": "Invalid username or password"}), 401
         #return render_template("login.html", error="Invalid username or password")
-        return redirect(url_for("message.get_message",message="login failed"))
+        return redirect(url_for("message.get_message",message="Invalid username or password",redirect=url_for("login.login")))
     
     access_token = create_access_token(identity=user.username)
     session['access_token'] = access_token
-    response = redirect(url_for("user_management.admin_dashboard" if isAdmin == 1 else "house.get_houses"))
+    response = redirect(url_for("user_management.admin_dashboard" if isAdmin == 1 else "house.get_all_houses"))
     
     set_access_cookies(response, access_token)
     return response

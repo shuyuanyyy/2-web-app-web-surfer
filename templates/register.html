@@ -16,7 +16,7 @@
             <div class="title-container">
                 <h2>User Register</h2>
             </div>
-            <form id="registerForm" action="{{ url_for('message') }}" method="post">
+            <form id="registerForm" action="{{ url_for('login.register') }}" method="post">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -41,43 +41,9 @@
                 <button type="submit" class="submit-btn">Register</button>
             </form>
             <div class="link">
-                <p>Already have an account? <a href="{{ url_for('login') }}">Sign in</a></p>
+                <p>Already have an account? <a href="{{ url_for('login.login') }}">Sign in</a></p>
             </div>
         </div>
     </div>
 </html>
 {% endblock %}
-<!-- 
-{% block scripts %}
-<script>
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const formData = {
-        username: document.getElementById('username').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        isAdmin: document.getElementById('isAdmin').checked
-    };
-
-    try {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        const data = await response.json();
-        if (data.success) {
-            alert('Sucess！');
-            window.location.href = '/login';
-        } else {
-            alert('Fail：' + data.message);
-        }
-    } catch (error) {
-        alert('Register Error：' + error);
-    }
-});
-</script>
