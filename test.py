@@ -19,6 +19,67 @@ from dotenv import load_dotenv, dotenv_values
 
 load_dotenv()  # load environment variables from .env file
 
+def convert_submitted_form_to_dict(form_data):
+    # Convert ImmutableMultiDict to a normal dictionary
+    data = form_data.to_dict(flat=True)
+
+    # Convert checkboxes ('on' -> 1, missing -> 0)
+    def checkbox_to_int(field):
+        return 1 if data.get(field) == "on" else 0
+
+    # Construct the structured JSON-like dictionary
+    apt = {
+        "id": data.get("id", ""),
+        "street_address": data.get("street_address", ""),
+        "city_address": data.get("city_address", ""),
+        "apt_num": data.get("apt_num", ""),
+        "price": int(data.get("price", 0)),
+        "bedroom": 1,  # Default value
+        "bathroom": 1,  # Default value
+        "area": int(data.get("area", 0)),
+        "date": data.get("date", ""),
+        "postperson": "Rin",  # Hardcoded value
+        "about_info": data.get("about_info", ""),
+        "policies": {
+            "pet_allowed": checkbox_to_int("pet_allowed"),
+            "guarantor_accepted": checkbox_to_int("guarantor_accepted"),
+            "smoke_free": checkbox_to_int("smoke_free"),
+        },
+        "amenities": {
+            "doorman": checkbox_to_int("doorman"),
+            "bikeroom": checkbox_to_int("bikeroom"),
+            "elevator": checkbox_to_int("elevator"),
+            "laundry": checkbox_to_int("laundry"),
+            "gym": checkbox_to_int("gym"),
+            "package_room": checkbox_to_int("package_room"),
+            "parking": checkbox_to_int("parking"),
+            "library": checkbox_to_int("library"),
+        },
+        "features": {
+            "centralair": checkbox_to_int("centralair"),
+            "dishwasher": checkbox_to_int("dishwasher"),
+            "view": checkbox_to_int("view"),
+            "hardwoodfloor": checkbox_to_int("hardwoodfloor"),
+            "fridge": checkbox_to_int("fridge"),
+            "privateoutdoor": checkbox_to_int("privateoutdoor"),
+            "oven": checkbox_to_int("oven"),
+            "washerdryer": checkbox_to_int("washerdryer"),
+        },
+        "building": {
+            "name": data.get("buildingName", ""),
+            "num_unit": 123213,  # Hardcoded value
+            "address": "building address",  # Hardcoded value
+            "about_info": ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                           "In at sem cursus, fringilla lectus eu, ultrices dolor. "
+                           "Nam consequat metus libero, viverra tincidunt tortor efficitur porta. "
+                           "In id volutpat arcu.")
+        }
+    }
+
+    return apt
+
+
+
 
 def create_app():
     """
@@ -57,7 +118,6 @@ def create_app():
             apt_id = request.form.get('id')
             print(apt_id)
         
-       
         #会从detail page收到要edit的aptid
         #理论上需要从数据库里面再拿一遍所有数据出来，再像下面一样通过render_template传进html里面
         return render_template("admin_apt_detail_edit.html",user = {"username": "JohnDoe"},
@@ -389,22 +449,16 @@ def create_app():
                                 "city":"Long Island City, NY 11101"
                                })
     
-    @app.route("/update/<apt_id>", methods=["GET",'POST'])
+    @app.route("/update/apt/<apt_id>", methods=["GET",'POST'])
     def update_apt_q(apt_id):
         if request.method == 'POST':
-            # apt_id = request.form.get('apt_id')
-            # # process the submitted data here
-            # print(f"Received apt_id: {apt_id}")
-            print("hi")
-            if request.content_type != 'application/json':
-                print("wu")    
-            data = request.get_json()
+            data = convert_submitted_form_to_dict(request.form)
             print(data)
 
             #update data here
 
 
-        print("req post for update apt from apt update page111111111")
+        print("req post for update apt from apt update")
         return render_template("update-apt.html", q_message = "Are you sure that you want to update this apartment?",
                                apt={
                                 "building": "Jackson Park",
@@ -579,3 +633,5 @@ if __name__ == "__main__":
     FLASK_ENV = os.getenv("FLASK_ENV")
     print(f"FLASK_ENV: {FLASK_ENV}, FLASK_PORT: {FLASK_PORT}")
     app.run(port=FLASK_PORT)
+
+

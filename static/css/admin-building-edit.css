@@ -47,7 +47,7 @@ body{
     font-size: 20px;
 }
 
-.toggle-grid {
+/* .toggle-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
@@ -60,7 +60,7 @@ body{
     padding: 10px;
     background: #f8f9fa;
     border-radius: 4px;
-}
+} */
 
 .save-btn {
     background: #28a745 !important;
