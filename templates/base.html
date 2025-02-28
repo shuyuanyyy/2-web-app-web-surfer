@@ -13,9 +13,19 @@
         <div>
           <img id="top-right-logo-image" src="/static/images/logo.png" alt="logo" width="300" height="300"/>
         </div>
-        <div id="top-left-avatar-container">
+        <div id="header-middle">
+          <nav>
+            <!--only admin can see -->
+            <a href="{{ url_for('create')}}">create</a>
+          </nav>
+          <nav>
+            <!--only admin can see -->
+            <a href="{{ url_for('admin_dashboard')}}">Admin Dashboard</a>
+          </nav>
+        </div>
+        <div id="top-right-avatar-container">
           <img id="user-avatar-image" src="/static/images/user-avatar.png" alt="user avatar" width="200" height="200"/>
-          <span id = "top-left-username">Username</span>
+          <span id = "top-right-username">Username</span>
         </div>
         
         <!-- <nav>

@@ -213,40 +213,4 @@
         </div>
     </body>
 </html>
-
-<!-- 添加 Font Awesome 图标库 -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
-
-<!-- <script>
-document.getElementById('wishlistBtn').addEventListener('click', async function() {
-    const aptId = this.getAttribute('data-apt-id');
-    try {
-        const response = await fetch('/api/wishlist/toggle', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                apt_id: aptId
-            })
-        });
-        
-        const data = await response.json();
-        if (data.success) {
-            const btn = document.getElementById('wishlistBtn');
-            const icon = document.getElementById('heartIcon');
-            
-            if (data.added) {
-                btn.classList.add('active');
-                btn.innerHTML = '<i class="fas fa-heart" id="heartIcon"></i> Added to Wishlist';
-            } else {
-                btn.classList.remove('active');
-                btn.innerHTML = '<i class="fas fa-heart" id="heartIcon"></i> Add to Wishlist';
-            }
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-</script> -->
 {% endblock %} 

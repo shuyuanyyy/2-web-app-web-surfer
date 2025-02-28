@@ -45,7 +45,7 @@
                         </div>
                       </div>
                   </div>
-                  <div class = "delete-icon-container">
+                  <div class = "user-delete-icon-container">
                     <form action="{{ url_for('delete_user_q', user_id=user.username) }}" method="post">
                       <input type="hidden" name="username" value="{{ user.username }}">
                       <input type="hidden" name="email" value="{{ user.email }}">

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block container %}
+
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="/static/css/delete-apt.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="confirmation-message-container">
+        <span class="confirmation-message">{{q_message}}</span>
+      </div>
+
+      <div class="userinfo-container">
+
+        <div class="user-details-container">
+            <div class="apt-widget">
+                <div class="apt-content">
+                    <div class="apt-details">
+                        <p class="apt-price">${{apt.price}}/mo</p>
+                        {% if apt.bedroom == "Studio" %}
+                        <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+                        {% else %}
+                        <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                        {% endif %}
+                        <p class="apt-available-date">{{apt.available_date}}</p>
+                        <div class="apt-building-name-apt-num-container">
+                            <span class="apt-building-name">{{apt.building}}</span>
+                            <span class="apt-apt-num">{{apt.apt_num}}</span>
+                        </div>
+                    </div>
+                    <div class="apt-image">
+                        <div class="placeholder">Picture</div>
+                    </div>
+                </div>
+                <p class="apt-area">{{apt.city}}</p>
+            </div>
+      </div>
+
+      <div class = "confirmation-button-container">
+        <form action="{{ url_for('message')}}" method="post">
+          <input type="hidden" name="id" value="{{apt.id}}">
+          <input type="hidden" name="building" value="{{apt.building}}">
+          <input type="hidden" name="apt_num" value="{{apt.apt_num}}">
+          {%if message == "post"%}
+          <input type="hidden" name="message" value="Apartment Created">
+          {%else%}
+          <input type="hidden" name="message" value="Apartment Updated">
+          {%endif%}
+
+          <button type="submit">Yes</button>
+        </form>
+        <button>
+          <nav>
+            <a href="{{ url_for('aptlist')}}">No</a>
+          </nav>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
+
+{% endblock %}
