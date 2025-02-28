@@ -45,14 +45,10 @@
 
       <div class = "confirmation-button-container">
         <form action="{{ url_for('message')}}" method="post">
-          <input type="hidden" name="id" value="{{apt.id}}">
+          <!-- <input type="hidden" name="id" value="{{apt.price}}"> Need to change-->
           <input type="hidden" name="building" value="{{apt.building}}">
           <input type="hidden" name="apt_num" value="{{apt.apt_num}}">
-          {%if message == "post"%}
-          <input type="hidden" name="message" value="Apartment Created">
-          {%else%}
           <input type="hidden" name="message" value="Apartment Updated">
-          {%endif%}
 
           <button type="submit">Yes</button>
         </form>

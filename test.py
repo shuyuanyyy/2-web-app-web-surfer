@@ -109,6 +109,62 @@ def create_app():
 
         return render_template("rinbase.html",message=message_from_req)
     
+    
+    @app.route("/apt_create",methods = ["POST","GET"])
+    def create():
+        #不知道能不能先生成一个id然后一起传进去create?
+        #这样，在save之后会比较方便前端跳转comfirmation page
+        #如果不行的话可能要改改逻辑或者route？
+        return render_template("admin_apt_detail_edit.html", message = "post",
+                               user={
+                                   "username":"Rin",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"yq2290@nyu.edu"
+                               },
+                               apt = {"id": "hjlkjdlssDJSLDJ",
+                                "street_address": "",
+                                "city_address": "",
+                                "apt_num": "",
+                                "price":"",
+                                "bedroom":"",
+                                "bathroom":"",
+                                "area":"",
+                                "date":"",
+                                "postperson":"",
+                                "about_info": "",
+                                "policies": {
+                                    "pet_allowed": 0,
+                                    "guarantor_accepted": 0,
+                                    "smoke_free": 0
+                                },
+                                "amenities": {
+                                    "doorman": 0,
+                                    "bikeroom": 0,
+                                    "elevator": 0,
+                                    "laundry": 0,
+                                    "gym": 0,
+                                    "package_room": 0,
+                                    "parking": 0,
+                                    "library": 0
+                                },
+                                "features": {
+                                    "centralair": 0,
+                                    "dishwasher": 0,
+                                    "view": 0,
+                                    "hardwoodfloor": 0,
+                                    "fridge": 0,
+                                    "privateoutdoor": 0,
+                                    "oven": 0,
+                                    "washerdryer": 0
+                                },
+                                "building":{
+                                    "name":"",
+                                    "num_unit": 0,
+                                    "address":"",
+                                    "about_info":""
+                                }})
+    
     @app.route("/apt_edit",methods = ["POST","GET"])
     def edit():
         message_from_req= request.form.get('message')
@@ -120,7 +176,13 @@ def create_app():
         
         #会从detail page收到要edit的aptid
         #理论上需要从数据库里面再拿一遍所有数据出来，再像下面一样通过render_template传进html里面
-        return render_template("admin_apt_detail_edit.html",user = {"username": "JohnDoe"},
+        return render_template("admin_apt_detail_edit.html",
+                               user={
+                                   "username":"Rin",
+                                   "usertype":0,
+                                   "avatar":"",
+                                   "email":"yq2290@nyu.edu"
+                               },
                                 apt = {"id": "101dafsdfasdfeafdr2eqr",
                                 "street_address": "123 Main St",
                                 "city_address": "New York, NY 10001",
@@ -439,6 +501,7 @@ def create_app():
         print("req post for delete apt from Aptlist")
         return render_template("delete-apt.html", q_message = "Are you sure that you want to detele this apartment?",
                                apt={
+                                "id":"afdsafsdfasdf",
                                 "building": "Jackson Park",
                                 "apt_num": "#512",
                                 "price": 1350.50,
@@ -461,8 +524,33 @@ def create_app():
         print("req post for update apt from apt update")
         return render_template("update-apt.html", q_message = "Are you sure that you want to update this apartment?",
                                apt={
+                                "id":"afdsafsdfasdf",
                                 "building": "Jackson Park",
                                 "apt_num": "#512",
+                                "price": 1350.50,
+                                "bedroom": "2",
+                                "bathroom": "2",
+                                "area": "1200",
+                                "available_date": "2025-06-01",
+                                "city":"Long Island City, NY 11101"
+                               })
+
+    @app.route("/create/apt/<apt_id>", methods=["GET",'POST'])
+    def create_apt_q(apt_id):
+        if request.method == 'POST':
+            data = convert_submitted_form_to_dict(request.form)
+            print(data)
+
+            #update data here
+
+
+        print("req post for update apt from apt update")
+        return render_template("update-apt.html", q_message = "Are you sure that you want to create this apartment?",
+                               message="post",
+                               apt={
+                                "id":"afdsafsdfasdf",
+                                "building": "Jackson Park",
+                                "apt_num": "#dafsdf",
                                 "price": 1350.50,
                                 "bedroom": "2",
                                 "bathroom": "2",
@@ -513,6 +601,14 @@ def create_app():
             
             redirectAddress=url_for("login")
             # process the submitted data here
+        
+        if message_from_req == "Apartment Created":
+            id =request.form.get('id')
+            redirectAddress=url_for('detail', apt_id=id)
+
+        if message_from_req == "Apartment Updated":
+            id =request.form.get('id')
+            redirectAddress=url_for('detail', apt_id=id)
         
         
         

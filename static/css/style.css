@@ -7,13 +7,31 @@ header{
     background-color: #f4f4f4;
 }
 
-#top-left-avatar-container{
+#header-middle{
+    display: flex;
+    width: auto;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 40px;
+}
+
+#header-middle nav a{
+    text-align: center;
+    font-size: 40px;
+    /* background-color: #474747; */
+}
+
+#header-middle nav{
+    text-align: center;
+}
+
+#top-right-avatar-container{
     display:flex;
     flex-direction: column;
     align-items: center;
 }
 
-#top-left-username{
+#top-right-username{
     font-size: 40px;
     text-align: center;
 }
