@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import Building, UserInformation, House
 from bson import ObjectId
@@ -20,7 +20,8 @@ def get_buildings():
             "about_info": building.about_info
         })
     
-    return jsonify(building_list), 200
+    #return jsonify(building_list), 200
+    return render_template("buildinglist.html", buildings=building_list)
 
 # get building details
 @building_bp.route('/<building_id>', methods=['GET'])

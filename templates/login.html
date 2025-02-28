@@ -5,10 +5,12 @@
 {% block container %}
 <html>
     <head>
-        <link
+        <!-- <link
           rel="stylesheet"
           href="/static/css/login_register.css"
-        />
+        /> -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/login_register.css') }}">
+
       </head>
       <div class="container">
         <div class="login-container">
@@ -16,7 +18,7 @@
                 <div class="title-container">
                     <h2>Login</h2>
                 </div>
-                <form id="loginForm" action="{{ url_for('login') }}" method="post">
+                <form id="loginForm" action="{{ url_for('login.login') }}" method="post">
                     <div class="form-group" >
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" required>
@@ -37,7 +39,7 @@
                     <button type="submit" class="submit-btn">Login</button>
                 </form>
                 <div class="link">
-                    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+                    <p>Don't have an account? <a href="{{ url_for('login.register') }}">Register</a></p>
                 </div>
             </div>
         </div>

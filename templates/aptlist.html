@@ -13,7 +13,7 @@
   <body>
     <div class="container"> 
       <div class="search-section">
-        <form action="{{ url_for('aptlist') }}" method="get" class="search-form">
+        <form action="{{ url_for('house.get_houses') }}" method="get" class="search-form">
             <input type="text" name="q" placeholder="Search apartment..." value="{{ search_term }}">
             <button type="submit">Search</button>
         </form>
@@ -33,21 +33,19 @@
           <ul>
             {% for apt in houseInfo %}
             <li>
-              <a href="{{ url_for('detail', apt_id=apt.price)}}">
+              <a href="{{ url_for('house.get_house', house_id=apt.price)}}">
               <div class="apt-widget">
               <!-- if usertype ==1 -->
                 <!-- <button class="close-btn">X</button> -->
                 <!-- 之后要改！！！！apt_id -->
                 <div class="delete-icon-container">
-                  <!-- <form action="{{ url_for('delete_apt_q', apt_id=apt.price) }}" method="post"> -->
-                  <form action="{{ url_for('delete_apt_q', apt_id=apt.area) }}" method="post">
+                  <form action="{{ url_for('house.delete_house', house_id=apt.area) }}" method="post">
                     <input type="hidden" name="apt_id" value="{{apt.price}}">
                     <button type="submit">
                       <img src="{{ url_for('static', filename='images/delete-icon.png') }}" alt="Delete" class="delete-icon">
                     </button>
                   </form>
                 </div>
-                <!-- <form action = "{{url_for('detail', apt_id=apt.price)}}" method="get">
                   <input type="hidden" name="apt_id" value="{{apt.price}}">
                   <button type="submit "> -->
                   <div class="aptlist-apt-content">
