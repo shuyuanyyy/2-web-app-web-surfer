@@ -1,32 +1,56 @@
-.container{
+.button-container{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
+    flex-direction: row;
+    /* background-color: red; */
+    height: 80vh;
+    gap:clamp(2vw, 4vw, 10vw)
 }
 
-.container > nav{
-    padding-left: 60px;
-}
 
 .manage-apt-button{
     align-self:center;
-    margin-top: 140px;
-    width: 93%;
-    background-color: #d1d1d1;
-    padding: 30px;
+    width: 40vw;
     border-radius: 8px;
-    height: 600px;
-    font-size: larger;
+    height: 30vh;
+    font-size: 4vw;
+    margin-top: 140px;
+    background-color: #4a5568;
+    color: #fff;
+    font-family: Monaco, Monospace;
 
 }
 
 .manage-guest-button{
     align-self:center;
-    margin-top: 140px;
-    width: 93%;
-    background-color: #d1d1d1;
-    padding: 30px;
+    background-color: #4a5568;
+    width: 40vw;
     border-radius: 8px;
-    height: 600px;
-    font-size: larger;
+    height: 30vh;
+    font-size: 4vw;
+    margin-top: 140px;
+    color: #fff;
+    font-family: Monaco, Monospace;
+
+}
+
+
+/* Tablets and smaller screens */
+@media (max-width: 768px) {
+    .button-container {
+        flex-direction: column;    
+        /* background-color: blue; */
+        align-items: center;
+    }
+    .manage-apt-button{
+        margin-top: 0px !important;
+        width: 70vw;
+
+    }
+    .manage-guest-button{
+        margin-top: 0px !important;
+        width: 70vw;
+
+    }
 }

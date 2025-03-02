@@ -11,21 +11,21 @@
     />
   </head>
   <body>
-    <div class="container">
-        <nav>
-            <a href="{{ url_for('house.get_all_houses')}}">
-                <button class = "manage-apt-button">
-                    Manage Apartment
-                </button>
-            </a>
-        </nav>
-        <nav>
-            <a href="{{ url_for('user_management.get_all_users')}}">
-                <button class = "manage-guest-button">
-                    Manage Guest
-                </button>
-            </a>
-        </nav>
+    <div class="button-container">
+      <nav>
+          <a href="{{ url_for('house.get_all_houses')}}">
+              <button class = "manage-apt-button">
+                  Manage Apartment
+              </button>
+          </a>
+      </nav>
+      <nav>
+          <a href="{{ url_for('user_management.get_all_users')}}">
+              <button class = "manage-guest-button">
+                  Manage Guest
+              </button>
+          </a>
+      </nav>
     </div>
   </body>
 </html>

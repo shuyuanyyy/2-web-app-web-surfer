@@ -16,7 +16,7 @@
             <div class="apt-detail-container">
                 <div class="apt-basic-container">
                     <div class="upper-container">
-                        <h2 class="section-title">{{apt.building.name}} {{apt.apt_num}}</h2>
+                        <h2 class="section-title">{{building.name}} {{apt.apt_num}}</h2>
 
                         <div class="apt-price-basic-like-icon-container">
                             <div class="apt-price-basic-container">
@@ -72,27 +72,27 @@
 
                 <div class="section">
                     <h2 class="subtitle">Policies</h2>
+                    {% if apt.policy %}
                     <div class="section-content">
-                        {% if apt.policy %}
-                            {% if apt.policy.pet_allowed %}
-                                <div class="list-item-container">
-                                    <p class="info-item">Allows Pets</p>
-                                </div>
-                            {% endif %}
-                            {% if apt.policy.smoke_free %}
-                                <div class="list-item-container">
-                                    <p class="info-item">Allows Smoking</p>
-                                </div>
-                            {% endif %}
-                            {% if apt.policy.guarantor_accepted %}
-                                <div class="list-item-container">
-                                    <p class="info-item">Accept Guarantor</p>
-                                </div>
-                            {% endif %}
-                        {% else %}
-                            <p>No policies available.</p>
+                        {% if apt.policy.pet_allowed %}
+                            <div class="list-item-container">
+                                <p class="list-item">Allows Pets</p>
+                            </div>
+                        {% endif %}
+                        {% if apt.policy.smoke_free %}
+                            <div class="list-item-container">
+                                <p class="list-item">Allows Smoking</p>
+                            </div>
+                        {% endif %}
+                        {% if apt.policy.guarantor_accepted %}
+                            <div class="list-item-container">
+                                <p class="list-item">Accept Guarantor</p>
+                            </div>
                         {% endif %}
                     </div>
+                    {% else %}
+                        <p>No policies available.</p>
+                    {% endif %}
                 </div>
 
 
@@ -102,47 +102,47 @@
                         {% if apt.amenities %}
                             {% if apt.amenities.doorman %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Doorman</p>
+                                    <p class="list-item">Doorman</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.bikeroom %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Bike Room</p>
+                                    <p class="list-item">Bike Room</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.elevator %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Elevator</p>
+                                    <p class="list-item">Elevator</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.laundry %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Laundry</p>
+                                    <p class="list-item">Laundry</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.gym %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Gym</p>
+                                    <p class="list-item">Gym</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.packageroom %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Package Room</p>
+                                    <p class="list-item">Package Room</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.parking %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Parking</p>
+                                    <p class="list-item">Parking</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.concierge %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Concierge</p>
+                                    <p class="list-item">Concierge</p>
                                 </div>
                             {% endif %}
                             {% if apt.amenities.library %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Library</p>
+                                    <p class="list-item">Library</p>
                                 </div>
                             {% endif %}
                         {% else %}
@@ -158,42 +158,42 @@
                         {% if apt.home_feature %}
                             {% if apt.home_feature.centralair %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Central Air</p>
+                                    <p class="list-item">Central Air</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.dishwasher %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Dishwasher</p>
+                                    <p class="list-item">Dishwasher</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.hardwoodfloor %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Hardwood Floor</p>
+                                    <p class="list-item">Hardwood Floor</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.view %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Scenic View</p>
+                                    <p class="list-item">Scenic View</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.privateoutdoor %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Private Outdoor Space</p>
+                                    <p class="list-item">Private Outdoor Space</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.washerdryer %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Washer & Dryer</p>
+                                    <p class="list-item">Washer & Dryer</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.fridge %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Refrigerator</p>
+                                    <p class="list-item">Refrigerator</p>
                                 </div>
                             {% endif %}
                             {% if apt.home_feature.oven %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Oven</p>
+                                    <p class="list-item">Oven</p>
                                 </div>
                             {% endif %}
                         {% else %}

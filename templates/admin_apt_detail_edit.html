@@ -74,7 +74,6 @@
                     <h2 class="section-title">Policies</h2>
                     <div class="section-content">
                         {% if apt.policy %}
-                        <div class="section-content">
                             <div class="list-item-container">
                                 <label class="list-item-label">
                                     <input type="checkbox" name="allows_pets" value="1" {% if apt.policy.pet_allowed %}checked{% endif %}>
@@ -95,7 +94,6 @@
                                     Guarantor Accepted
                                 </label>
                             </div>
-                        </div>
                         {% else %}
                         <p>No policies available.</p>
                         {% endif %}
@@ -218,9 +216,8 @@
 
                         <div class="list-item-container">
                             <label class="list-item-label">
-                                <input type="checkbox" name="privateoutdoor" value = "1" {% if apt.home_feature.privateoutdoor
-                                    %}checked{% endif %}>
-                                Private Outdoor Space
+                                <input type="checkbox" name="oven" value = "1" {% if apt.home_feature.oven %}checked{% endif %}>
+                                Oven
                             </label>
                         </div>
 
@@ -241,8 +238,9 @@
 
                         <div class="list-item-container">
                             <label class="list-item-label">
-                                <input type="checkbox" name="oven" value = "1" {% if apt.home_feature.oven %}checked{% endif %}>
-                                Oven
+                                <input type="checkbox" name="privateoutdoor" value = "1" {% if apt.home_feature.privateoutdoor
+                                    %}checked{% endif %}>
+                                Private Outdoor Space
                             </label>
                         </div>
                         {% else %}

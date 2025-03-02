@@ -12,18 +12,22 @@
   </head>
   <body>
     <div class="container"> 
-      <div class="search-section">
-        <form action="{{ url_for('house.get_all_houses') }}" method="get" class="search-form">
-            <input type="text" name="q" placeholder="Search apartment..." value="{{ search_term }}">
+      <div> 
+        <div class="search-section">
+          <form action="{{ url_for('house.get_all_houses') }}" method="get" class="search-form">
+            <div>
+              <input type="text" name="q" placeholder="Search apartment..." value="{{ search_term }}">
+              {% if target == ""%}
+              <div class="search-result"> </div>
+              {% else %}
+              <div class="search-result"> Searched for {{target}}</div>
+              {% endif %}
+            </div>
             <button type="submit">Search</button>
-        </form>
+          </form>
+        </div>
       </div>
-      {% if target == ""%}
-      <span class="search-result"> </span>
-      {% else %}
-      <span class="search-result"> Searched for {{target}}</span>
-      {% endif %}
-
+      
       <div class = "aptlist-display-container">
         <div class = "subtitle-container">
           <span class = "subtitle">Apartments</span>
@@ -52,11 +56,11 @@
                     <div class="apt-details">
                       <p class="apt-price">${{apt.price}}/mo</p>
                       {% if apt.bedroom == "Studio" %}
-                      <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+                      <p class="apt-type-and-size">Studio | {{apt.area}} sqft</p>
                       {% else %}
-                      <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                      <p class="apt-type-and-size">{{apt.bedroom}} Bd | {{apt.bathroom}} Ba | {{apt.area}} sqft</p>
                       {% endif %}
-                      <p class="apt-available-date">{{apt.available_date}}</p>
+                      <p class="apt-available-date">Available:<br>{{apt.available_date}}</p>
                       <div class="apt-building-name-apt-num-container">
                         <span class="apt-building-name">{{apt.building}}</span>
                         <span class="apt-apt-num">{{apt.apt_num}}</span>

@@ -24,9 +24,9 @@
             <div class="apt-details">
               <p class="apt-price">${{apt.price}}/mo</p>
               {% if apt.bedroom == "Studio" %}
-              <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+              <p class="apt-type-and-size">Studio {{apt.area}}</p>
               {% else %}
-              <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+              <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}}</p>
               {% endif %}
               <p class="apt-available-date">{{apt.available_date}}</p>
               <div class="apt-building-name-apt-num-container">

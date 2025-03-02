@@ -1,8 +1,8 @@
-/* .container {
-    max-width: 1200px;
+.container {
+    max-width: 90vh;
     margin: 0 auto;
     padding: 20px;
-} */
+}
 
 .header {
     display: flex;
@@ -64,12 +64,13 @@
 
 
 .apt-image {
-    width: 980px;
-    height: 600px;
+    width: 110%;
+    min-height: 30vh;
+    height:0.5vw;
     padding: 0px;
     margin: 0px;
     position: relative;
-    left:-60px;
+    left:-5%;
     background: #212e33;
     display: flex;
     align-items: center;
@@ -92,8 +93,8 @@
 }
 
 .apt-like-icon-container > form > button > img{
-    height: 100px;
-    width: 100px;
+    height: 6vh;
+    width: 6vh;
 }
 
 .apt-basic-container{
@@ -134,7 +135,7 @@
 }
 
 .lower-container{
-    margin-top: 50px;
+    margin-top: 2vh;
 }
 
 .section-content{
@@ -145,19 +146,28 @@
 }
 
 .list-item-container{
-    width: 400px;
-    height: 60px;
+    width: 30vw;
+    height: fit-content;
+    /* min-height: 1vh; */
+}
+
+.list-item{
+    font-size:2vh;
+    color: #2c3e50;
+    /* color: red; */
+    line-height: 1.6;
+    margin: 0px;
 }
 
 .subtitle{
-    font-size:60px;
+    font-size:3vh;
     font-weight: bolder;
     color: #333;
     margin-bottom: 10px;
 }
 
 .section {
-    margin-top: 100px;
+    margin-top: 4vh;
     margin-bottom: 30px;
     padding-bottom: 20px;
     /* border-bottom: 1px solid #333; */
@@ -166,7 +176,7 @@
 
 
 .info-item {
-    font-size:40px;
+    font-size:2vh;
     color: #2c3e50;
     /* color: red; */
     margin: 10px 0;
@@ -176,16 +186,17 @@
 .about-item{
     font-size:17px;
     color: #2c3e50;
-    margin: 10px 0;
+    margin: 0px;
     line-height: 30px;
+    padding-left: 20px;
 }
 
 .edit-btn{
-    height: 100px;
-    width: 100px;
+    height: 6vh;
+    width: 6vh;
     background: #d1d1d1 !important;
     color: black;
-    font-size:40px;
+    font-size:2vh;
 }
 
 .selection-container {
@@ -204,6 +215,7 @@
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
+    font-size: 4vh;
 }
 
 .options {
