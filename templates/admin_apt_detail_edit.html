@@ -3,32 +3,22 @@
 {% block container %}
 
 <head>
-    <link
-        rel="stylesheet"
-        href="/static/css/admin-building-edit.css"
-    />
+    <link rel="stylesheet" href="/static/css/admin-building-edit.css" />
 </head>
+
 <body>
     <div class="container">
-        <!-- <div class="header">
-            <a href="{{ url_for('admin_dashboard') }}" class="back-button">Back to Dashboard</a>
-            <div class="user-info">
-                <span>Admin: {{ user.username }}</span>
-            </div>
-        </div> -->
 
         <div class="apt-detail">
-            {%if message == "post"%}
-            <form id="aptEditForm", action="{{ url_for('create_apt_q', apt_id=apt.id) }}" method="post" data-apt-id="{{ apt.id }}">
-            {%else%}
-            <form id="aptEditForm", action="{{ url_for('update_apt_q', apt_id=apt.id) }}" method="post" data-apt-id="{{ apt.id }}">
-            {%endif%}
             <!-- <form id="aptEditForm"> -->
+            <form id="aptEditForm" action="{{ url_for('house.confirm_update', house_id=apt.apt_num) }}" method="GET"
+                data-apt-id="{{ apt.apt_num }}">
+
                 <div class="section">
                     <h2 class="section-title">Basic Info</h2>
                     <div class="form-group">
                         <label>Building Name</label>
-                        <input type="text" name="buildingName" value="{{ apt.building.name }}">
+                        <input type="text" name="buildingName" value="{{ apt.building }}">
                     </div>
                     <div class="form-group">
                         <label>Apartment Number</label>
@@ -41,28 +31,28 @@
                     <div class="form-group">
                         <label>Bedroom:</label>
                         <select name="bedroom">
-                            <option value="Studio" >Studio</option>
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
+                            <option value="Studio">Studio</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Bathroom:</label>
                         <select name="bathroom">
-                            <option value="Studio" >Studio</option>
-                            <option value="1" >1</option>
-                            <option value="2" >2</option>
-                            <option value="3" >3</option>
+                            <option value="Studio">Studio</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Square Feet</label>
-                        <input type="number" name="area" value="{{ apt.area }}">
+                        <input type="text" name="area" value="{{ apt.area }}">
                     </div>
                     <div class="form-group">
                         <label>Available Date</label>
-                        <input type="text" name="date" value="{{ apt.date }}">
+                        <input type="text" name="date" value="{{ apt.available_date.strftime('%Y-%m-%d')}}">
                     </div>
                     <div class="form-group">
                         <label>Street Address</label>
@@ -77,64 +67,224 @@
                         <textarea name="about_info">{{ apt.about_info }}</textarea>
                     </div>
                 </div>
-                
-            
+
+
 
                 <div class="section">
                     <h2 class="section-title">Policies</h2>
-                    <div class = "section-content">
-                        {% for policy, status in apt.policies.items() %}
+                    <div class="section-content">
+                        {% if apt.policy %}
+                        <div class="section-content">
                             <div class="list-item-container">
                                 <label class="list-item-label">
-                                    <input type="checkbox" name="{{policy}}" {% if status == 1 %}checked{% endif %}>
-                                    {{policy}}
+                                    <input type="checkbox" name="allows_pets" value="1" {% if apt.policy.pet_allowed %}checked{% endif %}>
+                                    Allows Pets
                                 </label>
                             </div>
-                        {% endfor %}
+                
+                            <div class="list-item-container">
+                                <label class="list-item-label">
+                                    <input type="checkbox" name="allows_smoking" value="1" {% if apt.policy.smoke_free %}checked{% endif %}>
+                                    Allows Smoking
+                                </label>
+                            </div>
+                
+                            <div class="list-item-container">
+                                <label class="list-item-label">
+                                    <input type="checkbox" name="guarantor_accepted" value="1" {% if apt.policy.guarantor_accepted %}checked{% endif %}>
+                                    Guarantor Accepted
+                                </label>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p>No policies available.</p>
+                        {% endif %}
                     </div>
                 </div>
+                
 
 
                 <div class="section">
                     <h2 class="section-title">Apartment Amenities</h2>
-                    <div class = "section-content">
-                        {% for amenity, status in apt.amenities.items() %}
-                            <div class="list-item-container">
-                                <label class="list-item-label">
-                                    <input type="checkbox" name="{{amenity}}" {% if status == 1 %}checked{% endif %}>
-                                    {{amenity}}
-                                </label>
-                            </div>
-                        {% endfor %}
+                    <div class="section-content">
+                        {% if apt.amenities %}
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="doorman"  value = "1" {% if apt.amenities.doorman %}checked{% endif %}>
+                                Doorman
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="bikeroom" value = "1" {% if apt.amenities.bikeroom %}checked{% endif
+                                    %}>
+                                Bike Room
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="elevator" value = "1" {% if apt.amenities.elevator %}checked{% endif
+                                    %}>
+                                Elevator
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="laundry" value = "1" {% if apt.amenities.laundry %}checked{% endif %}>
+                                Laundry
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="gym" value = "1"  {% if apt.amenities.gym %}checked{% endif %}>
+                                Gym
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="packageroom" value = "1" {% if apt.amenities.packageroom %}checked{%
+                                    endif %}>
+                                Package Room
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="parking" value = "1" {% if apt.amenities.parking %}checked{% endif %}>
+                                Parking
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="concierge" value = "1" {% if apt.amenities.concierge %}checked{% endif
+                                    %}>
+                                Concierge
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="library" value = "1" {% if apt.amenities.library %}checked{% endif %}>
+                                Library
+                            </label>
+                        </div>
+                        {% else %}
+                        <p>No amenities available.</p>
+                        {% endif %}
                     </div>
                 </div>
 
+
                 <div class="section">
                     <h2 class="section-title">Home Features</h2>
-                    <div class = "section-content">
-                        {% for feature, status in apt.features.items() %}
-                            <div class="list-item-container">
-                                <label class="list-item-label">
-                                    <input type="checkbox" name="{{feature}}" {% if status == 1 %}checked{% endif %}>
-                                    {{feature}}
-                                </label>
-                            </div>
-                        {% endfor %}
+                    <div class="section-content">
+                        {% if apt.home_feature %}
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="centralair" value = "1" {% if apt.home_feature.centralair %}checked{%
+                                    endif %}>
+                                Central Air
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="dishwasher" value = "1" {% if apt.home_feature.dishwasher %}checked{%
+                                    endif %}>
+                                Dishwasher
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="hardwoodfloor" {% if apt.home_feature.hardwoodfloor
+                                    %}checked{% endif %}>
+                                Hardwood Floor
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="view" value = "1" {% if apt.home_feature.view %}checked{% endif %}>
+                                Scenic View
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="privateoutdoor" value = "1" {% if apt.home_feature.privateoutdoor
+                                    %}checked{% endif %}>
+                                Private Outdoor Space
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="washerdryer" value = "1" {% if apt.home_feature.washerdryer %}checked{%
+                                    endif %}>
+                                Washer & Dryer
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="fridge" value = "1" {% if apt.home_feature.fridge %}checked{% endif %}>
+                                Refrigerator
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="oven" value = "1" {% if apt.home_feature.oven %}checked{% endif %}>
+                                Oven
+                            </label>
+                        </div>
+                        {% else %}
+                        <p>No home features available.</p>
+                        {% endif %}
                     </div>
                 </div>
+
+
                 <div class="confirmation-button-container">
-                    <input type="hidden" name="id" value="{{apt.id}}">
+                    <input type="hidden" name="id" value="{{apt.apt_num}}">
+                    <input type="hidden" name="access_token" value="{{ session['access_token'] }}">
                     <button type="submit" class="save-btn">Save</button>
                     <button class="cancel-btn">
                         <nav>
-                            <a href="{{ url_for('aptlist')}}">Cancel</a>
+                            <a href="{{ url_for('house.get_all_houses')}}">Cancel</a>
                         </nav>
                     </button>
                 </div>
-            </form>                
+            </form>
         </div>
     </div>
 </body>
 
+<script>
+    document.getElementById("aptEditForm").addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent default form submission
 
-{% endblock %} 
+        let formData = new FormData(this);
+        let params = new URLSearchParams(formData).toString(); // Convert form data to query string
+
+        console.log("DEBUG: Redirecting to confirmation page with params:", params);
+
+        // Redirect to confirmation page with query parameters
+        window.location.href = this.action + "?" + params;
+    });
+</script>
+
+
+
+
+
+
+
+{% endblock %}

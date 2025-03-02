@@ -14,9 +14,8 @@ house_bp = Blueprint("house", __name__)
 
 # CREATE HOUSE
 @house_bp.route('/create', methods=['POST'])
-@jwt_required()
 def create_house():
-    data = request.json
+    data = request.form
     current_user = get_jwt_identity()
     posted_admin = current_user
 
@@ -25,70 +24,87 @@ def create_house():
         return jsonify({"error": "User not found"}), 404
 
     #check if the user is admin
-    if posted_admin.usertype != 1: 
-        return jsonify({"error": "Permission denied: Only admins can add houses"}), 403
+    #if posted_admin.usertype != 1: 
+    #    return jsonify({"error": "Permission denied: Only admins can add houses"}), 403
 
-
+    full_address = f"{data.get('street_address', '').strip()} {data.get('city_address', '').strip()}".strip()
     #create corresponding policy data
     new_policy = Policy(
-        pet_allowed=data["policy"]["pet_allowed"],
-        guarantor_accepted=data["policy"]["guarantor_accepted"],
-        smoke_free=data["policy"]["smoke_free"]
+        pet_allowed=int(data.get("allows_pets", 0)),
+        guarantor_accepted=int(data.get("guarantor_accepted", 0)),
+        smoke_free=int(data.get("allows_smoking", 0))
     ).save()
 
     #create corresponding home feature data
     new_home_feature = HomeFeature(
-        centralair=data["home_feature"]["centralair"],
-        dishwasher=data["home_feature"]["dishwasher"],
-        hardwoodfloor=data["home_feature"]["hardwoodfloor"],
-        view=data["home_feature"]["view"],
-        privateoutdoor=data["home_feature"]["privateoutdoor"],
-        washerdryer=data["home_feature"]["washerdryer"],
-        fridge=data["home_feature"]["fridge"],
-        oven=data["home_feature"]["oven"]
+        centralair=int(data.get("centralair", 0)),
+        dishwasher=int(data.get("dishwasher", 0)),
+        hardwoodfloor=int(data.get("hardwoodfloor", 0)),
+        view=int(data.get("view", 0)),
+        privateoutdoor=int(data.get("privateoutdoor", 0)),
+        washerdryer=int(data.get("washerdryer", 0)),
+        fridge=int(data.get("fridge", 0)),
+        oven=int(data.get("oven", 0))
     ).save()
 
     #create corresponding amenity data
     new_amenities = BuildingAmenity(
-        doorman=data["amenities"]["doorman"],
-        bikeroom=data["amenities"]["bikeroom"],
-        elevator=data["amenities"]["elevator"],
-        laundry=data["amenities"]["laundry"],
-        gym=data["amenities"]["gym"],
-        packageroom=data["amenities"]["packageroom"],
-        parking=data["amenities"]["parking"],
-        concierge=data["amenities"]["concierge"],
-        library=data["amenities"]["library"]
+        doorman=int(data.get("doorman", 0)),
+        bikeroom=int(data.get("bikeroom", 0)),
+        elevator=int(data.get("elevator", 0)),
+        laundry=int(data.get("laundry", 0)),
+        gym=int(data.get("gym", 0)),
+        packageroom=int(data.get("packageroom", 0)),
+        parking=int(data.get("parking", 0)),
+        concierge=int(data.get("concierge", 0)),
+        library=int(data.get("library", 0))
     ).save()
+
+    building = Building.objects(name=data['buildingName']).first()
+    if not building:
+        building = Building(
+            name=data.get("buildingName"),
+            address=full_address,
+            num_unit = 0,
+            about_info="None"
+        ).save()
 
     #create new house data
     new_house = House(
-        building=data["building"], #assume the building exists
-        apt_num=data["apt_num"],
-        price=data["price"],
-        bedroom=data["bedroom"],
-        bathroom=data["bathroom"],
-        area=data["area"],
-        available_date=data["available_date"],
-        address=data["address"],
-        posted_admin=posted_admin["username"],
-        about_info=data["about_info"],
+        building=data.get("buildingName"),  # Assume the building exists
+        apt_num=data.get("apt_num"),
+        price=float(data.get("price", 0)),  # Ensure float conversion
+        bedroom=data.get("bedroom"),
+        bathroom=data.get("bathroom"),
+        area=data.get("area"),
+        available_date=data.get("date"),
+        address=full_address,
+        posted_admin=posted_admin,
+        about_info=data.get("about_info"),
         policy=new_policy,
         home_feature=new_home_feature,
         amenities=new_amenities,
-        picture=data["picture"]
+        picture=data.get("picture", "")  # Handle missing picture safely
     ).save()
 
     #find the corresponding building information
-    building = Building.objects(name=data['building']).first()
-    if not building:
-        return jsonify({'error': 'Building not found'}), 404
+   
     
     #add the unit number by 1
     building.update(inc__num_unit=1)
 
 
-    return jsonify({"message": "House added successfully"}), 201
+    return redirect(url_for("house.get_house", house_id = new_house.apt_num))
+
+
+@house_bp.route('/create_page', methods=['GET'])
+def create_house_page():
+    return render_template("admin_create_apt.html")
+
+@house_bp.route('/confirm-create', methods=['GET'])
+def confirm_create():
+    return render_template("post-apt.html")
+
 
 #show all houses
 @house_bp.route('/list', methods=['GET'])
@@ -134,7 +150,7 @@ def get_house(house_id):
         "bedroom": house.bedroom,
         "bathroom": house.bathroom,
         "area": house.area,
-        "available_date": house.available_date.strftime("%Y-%m-%d") if house.available_date else None,
+        "available_date": house.available_date.strftime('%Y-%m-%d') if house.available_date else None,
         "address": house.address,
         "posted_admin": house.posted_admin,
         "about_info": house.about_info,
@@ -184,37 +200,121 @@ def get_house(house_id):
     #}), 200
     return render_template("detail.html", apt = house, building=building)
 
+#edit house page
+@house_bp.route('/edit/<house_id>', methods=['GET'])
+def edit_house_page(house_id):
+    house = House.objects(apt_num=house_id).first()
+
+    if not house:
+        return "House not found", 404
+
+    return render_template("admin_apt_detail_edit.html", apt=house)
+
+
+
 #update house information
-@house_bp.route('/update/<house_id>', methods=['PUT'])
+@house_bp.route('/update/<house_id>', methods=['POST','PUT'])
 def update_house(house_id):
-    data = request.json
-    house = House.objects(id=house_id).first()
+    data = request.form
+    house = House.objects(apt_num=house_id).first()
+
 
     if not house:
         return jsonify({"error": "House not found"}), 404
 
-    house.update(**data)
-    return jsonify({"message": "House updated successfully"}), 200
+    house.update(
+        set__building=data.get("buildingName", house.building),
+        set__apt_num=data.get("apt_num", house.apt_num),
+        set__price=float(data.get("price", house.price)),
+        set__bedroom=data.get("bedroom", house.bedroom),
+        set__bathroom=data.get("bathroom", house.bathroom),
+        set__area=data.get("area", house.area),
+        set__available_date=data.get("date", house.available_date),
+        set__address=data.get("street_address", house.address),
+        set__posted_admin=house.posted_admin,  # Keep the original poster
+        set__about_info=data.get("about_info", house.about_info),
+        set__picture=data.get("picture", house.picture)
+    )
+    if house.policy:
+        house.policy.update(
+            set__pet_allowed=int(data.get("allows_pets", 0)),
+            set__guarantor_accepted=int(data.get("guarantor_accepted", 0)),
+            set__smoke_free=int(data.get("allows_smoking", 0))
+        )
+
+    # Update amenities (1 for yes, 0 for no)
+    if house.amenities:
+        house.amenities.update(
+            set__doorman=int(data.get("doorman", 0)),
+            set__bikeroom=int(data.get("bikeroom", 0)),
+            set__elevator=int(data.get("elevator", 0)),
+            set__laundry=int(data.get("laundry", 0)),
+            set__gym=int(data.get("gym", 0)),
+            set__packageroom=int(data.get("packageroom", 0)),
+            set__parking=int(data.get("parking", 0)),
+            set__concierge=int(data.get("concierge", 0)),
+            set__library=int(data.get("library", 0))
+        )
+
+    # Update home features (1 for yes, 0 for no)
+    if house.home_feature:
+        house.home_feature.update(
+            set__centralair=int(data.get("centralair", 0)),
+            set__dishwasher=int(data.get("dishwasher", 0)),
+            set__hardwoodfloor=int(data.get("hardwoodfloor", 0)),
+            set__view=int(data.get("view", 0)),
+            set__privateoutdoor=int(data.get("privateoutdoor", 0)),
+            set__washerdryer=int(data.get("washerdryer", 0)),
+            set__fridge=int(data.get("fridge", 0)),
+            set__oven=int(data.get("oven", 0))
+        )
+
+    #updated_house = House.objects(apt_num=house_id).first()
+    building = Building.objects(name=house.building).first()
+    updated_house = House.objects(apt_num = house_id).first()
+    return redirect(url_for("house.get_house", house_id = updated_house.apt_num))
+    #return redirect(url_for("house.get_house", house_id=house.apt_num))
+    #return jsonify({"message": "House updated successfully"}), 200
+    #return redirect(url_for("house.get_house", house_id = house.apt_num))
+
+@house_bp.route('/confirm-update/<house_id>', methods=['GET'])
+def confirm_update(house_id):
+    house = House.objects(apt_num=house_id).first()
+
+    if not house:
+        return jsonify({"error": "House not found"}), 404
+
+    return render_template("update-apt.html", apt=house, q_message="Are you sure you want to update this apartment?")
+
+@house_bp.route('/confirm-delete/<house_id>', methods=['GET'])
+def confirm_delete(house_id):
+    house = House.objects(apt_num=house_id).first()
+
+    if not house:
+        return jsonify({"error": "House not found"}), 404
+
+    return render_template("delete-apt.html", apt=house, q_message="Are you sure you want to delete this apartment?")
 
 # delete house
-@house_bp.route('/delete/<house_id>', methods=['DELETE'])
+@house_bp.route('/delete/<house_id>', methods=['POST'])
 def delete_house(house_id):
-    house = House.objects(id=house_id).first()
+    if request.form.get("_method") == "DELETE":
+        house = House.objects(apt_num=house_id).first()
 
-    if not house:
-        return jsonify({"error": "House not found"}), 404
+        if not house:
+            return jsonify({"error": "House not found"}), 404
 
-    building = Building.objects(name=house.building).first()
-    # delete corresponding policies, home features, and amenities data
-    if house.policy:
-        house.policy.delete()
-    if house.home_feature:
-        house.home_feature.delete()
-    if house.amenities:
-        house.amenities.delete()
-    house.delete()
+        building = Building.objects(name=house.building).first()
+        # delete corresponding policies, home features, and amenities data
+        if house.policy:
+            house.policy.delete()
+        if house.home_feature:
+            house.home_feature.delete()
+        if house.amenities:
+            house.amenities.delete()
+        house.delete()
 
-    if building and building.num_unit > 0:
-        building.update(dec__num_unit=1)
+        if building and building.num_unit > 0:
+            building.update(dec__num_unit=1)
 
-    return jsonify({"message": "House deleted successfully"}), 200
+    return redirect(url_for("house.get_all_houses"))

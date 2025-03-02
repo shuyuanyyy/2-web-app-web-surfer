@@ -14,7 +14,7 @@
   <body>
     <div class="container">
       <div class="confirmation-message-container">
-        <span class="confirmation-message">{{q_message}}</span>
+        <span class="confirmation-message">{{ q_message }}</span>
       </div>
 
       <div class="userinfo-container">
@@ -23,38 +23,45 @@
             <div class="apt-widget">
                 <div class="apt-content">
                     <div class="apt-details">
-                        <p class="apt-price">${{apt.price}}/mo</p>
-                        {% if apt.bedroom == "Studio" %}
-                        <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+                        <p class="apt-price">${{ request.args.get('price', '0') }}/mo</p>
+                        {% if request.args.get('bedroom') == "Studio" %}
+                        <p class="apt-type-and-size">Studio {{ request.args.get('area', 'Unknown') }} sqft</p>
                         {% else %}
-                        <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                        <p class="apt-type-and-size">
+                          {{ request.args.get('bedroom', 'Unknown') }} Bd 
+                          {{ request.args.get('bathroom', 'Unknown') }} Ba 
+                          {{ request.args.get('area', 'Unknown') }} sqft
+                        </p>
                         {% endif %}
-                        <p class="apt-available-date">{{apt.available_date}}</p>
+                        <p class="apt-available-date">{{ request.args.get('date', 'N/A') }}</p>
                         <div class="apt-building-name-apt-num-container">
-                            <span class="apt-building-name">{{apt.building}}</span>
-                            <span class="apt-apt-num">{{apt.apt_num}}</span>
+                            <span class="apt-building-name">{{ request.args.get('buildingName', 'Unknown') }}</span>
+                            <span class="apt-apt-num">{{ request.args.get('apt_num', 'N/A') }}</span>
                         </div>
                     </div>
                     <div class="apt-image">
                         <div class="placeholder">Picture</div>
                     </div>
                 </div>
-                <p class="apt-area">{{apt.city}}</p>
+                <p class="apt-area">{{ request.args.get('city_address', 'Unknown') }}</p>
             </div>
       </div>
 
-      <div class = "confirmation-button-container">
-        <form action="{{ url_for('message')}}" method="post">
-          <!-- <input type="hidden" name="id" value="{{apt.price}}"> Need to change-->
-          <input type="hidden" name="building" value="{{apt.building}}">
-          <input type="hidden" name="apt_num" value="{{apt.apt_num}}">
-          <input type="hidden" name="message" value="Apartment Updated">
+      <div class="confirmation-button-container">
+        <form action="{{ url_for('house.create_house') }}" method="POST">
+          <!-- Extracting all fields dynamically from the URL -->
+          {% for key, value in request.args.items() %}
+          <input type="hidden" name="{{ key }}" value="{{ value }}">
+          {% endfor %}
+
+          <input type="hidden" name="message" value="Apartment Created">
 
           <button type="submit">Yes</button>
         </form>
+        
         <button>
           <nav>
-            <a href="{{ url_for('aptlist')}}">No</a>
+            <a href="{{ url_for('house.get_all_houses') }}">No</a>
           </nav>
         </button>
       </div>

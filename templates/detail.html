@@ -17,6 +17,7 @@
                 <div class="apt-basic-container">
                     <div class="upper-container">
                         <h2 class="section-title">{{apt.building.name}} {{apt.apt_num}}</h2>
+
                         <div class="apt-price-basic-like-icon-container">
                             <div class="apt-price-basic-container">
                                 <h1 class="apt-price">${{ apt.price }}/mo</h1>
@@ -27,20 +28,28 @@
                                 {% endif %}
                             </div>
                             <div class="apt-like-icon-container">
+                                {% if session['is_admin'] == 0 %}
                                 <form action="{{ url_for('home') }}" method="post">
                                     <input type="hidden" name="apt_id" value="{{apt.id}}">
-
                                     <button type="submit">
                                         <img src="{{ url_for('static', filename='images/like-icon.webp') }}" alt="Like" class="like-icon">
                                     </button>
                                 </form>
+                                {% else %}
+                                <form action="{{ url_for('house.edit_house_page', house_id = apt.apt_num) }}" method="get">
+                                    <input type="hidden" name="apt_id" value="{{apt.id}}">
+                                    <button class="edit-btn" type="submit">
+                                        Edit
+                                    </button>
+                                </form>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     <div class="lower-container">
                         <div class="apt-date-address-listed-email-container">
                             <div class="apt-date">
-                                <p class="info-item">Available <br> {{ apt.date }}</p>
+                                <p class="info-item">Available <br> {{ apt.available_date.strftime('%Y-%m-%d') }}</p>
                             </div>
                             <div class="apt-address">
                                 <p class="info-item" id="apt-address-text">{{ apt.street_address }}<br>{{apt.city_address}}</p>
@@ -65,19 +74,19 @@
                     <h2 class="subtitle">Policies</h2>
                     <div class="section-content">
                         {% if apt.policy %}
-                            {% if apt.policy.allows_pets %}
+                            {% if apt.policy.pet_allowed %}
                                 <div class="list-item-container">
                                     <p class="info-item">Allows Pets</p>
                                 </div>
                             {% endif %}
-                            {% if apt.policy.allows_smoking %}
+                            {% if apt.policy.smoke_free %}
                                 <div class="list-item-container">
                                     <p class="info-item">Allows Smoking</p>
                                 </div>
                             {% endif %}
-                            {% if apt.policy.has_parking %}
+                            {% if apt.policy.guarantor_accepted %}
                                 <div class="list-item-container">
-                                    <p class="info-item">Has Parking</p>
+                                    <p class="info-item">Accept Guarantor</p>
                                 </div>
                             {% endif %}
                         {% else %}
@@ -212,5 +221,8 @@
             </div> -->
         </div>
     </body>
+    <script>
+        console.log(document.cook)
+    </script>
 </html>
 {% endblock %} 

@@ -28,7 +28,7 @@ def create_app():
 
     app = Flask(__name__, 
                 template_folder=os.path.abspath("../templates"),
-                static_folder=os.path.abspath("../static"))
+                static_folder=os.path.abspath("static"))
     # load flask config from env variables
     app.secret_key = "SWE_Project2"
     config = dotenv_values()
@@ -38,24 +38,44 @@ def create_app():
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "SWE_Project2")
     app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]
     app.config["SESSION_TYPE"] = "filesystem"
+    app.config["SESSION_PERMANENT"] = True
+
+    app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies"]  # Ensure JWT is read from both
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "SWE_Project2")
+    app.config["JWT_ACCESS_COOKIE_NAME"] = "access_token_cookie"
+    app.config["JWT_COOKIE_CSRF_PROTECT"] = False  # Disable CSRF for debugging
+    app.config["JWT_COOKIE_SECURE"] = False
+
+
     jwt = JWTManager(app)
     PUBLIC_ROUTES = ["login.login", "login.register", "static", "home", "message.get_message"]
 
     @app.before_request
     def restricted_access():
-        #print("All Available Endpoints:", [rule.endpoint for rule in app.url_map.iter_rules()])
-        """ if request.endpoint:
-            print("Request endpoint:", request.endpoint)
-        if request.endpoint.startswith("static"):
-            return  """
+        #print(f"DEBUG: Checking request to {request.endpoint}")
+
         if request.endpoint not in PUBLIC_ROUTES:
             try:
-                verify_jwt_in_request()
-                get_jwt_identity()
-            except:
-                return redirect(url_for("message.get_message",message="Please login first",redirect=url_for("login.login")))
-                #return redirect(url_for("login.login"))
+                # Print all request headers before authentication check
+                #print("DEBUG: Incoming Request Headers:", dict(request.headers))
+                #print("DEBUG: Incoming Request Cookies:", dict(request.cookies))
 
+                # If Authorization is missing, manually inject JWT from cookies
+                if "Authorization" not in request.headers:
+                    jwt_from_cookie = request.cookies.get("access_token_cookie")
+                    if jwt_from_cookie:
+                        request.headers = {**request.headers, "Authorization": f"Bearer {jwt_from_cookie}"}
+                        #print("DEBUG: Injected JWT from Cookie into Headers")
+
+                verify_jwt_in_request()
+                identity = get_jwt_identity()
+                #print(f"DEBUG: User {identity} is authenticated.")
+            except Exception as e:
+                #print(f"DEBUG: JWT verification failed - {str(e)}")
+                return redirect(url_for("message.get_message", message="Please login first", redirect=url_for("login.login")))
+
+
+    
     app.register_blueprint(login_bp, url_prefix="/login")
     app.register_blueprint(house_bp, url_prefix="/house")
     app.register_blueprint(user_management_bp, url_prefix="/users")

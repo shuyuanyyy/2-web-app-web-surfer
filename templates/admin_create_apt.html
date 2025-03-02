@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/admin-building-edit.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="apt-detail">
+            <form id="aptCreateForm" action="{{ url_for('house.confirm_create') }}" method="GET">
+
+                <div class="section">
+                    <h2 class="section-title">Basic Info</h2>
+                    <div class="form-group">
+                        <label>Building Name</label>
+                        <input type="text" name="buildingName" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Apartment Number</label>
+                        <input type="text" name="apt_num" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="text" name="price" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Bedroom:</label>
+                        <select name="bedroom">
+                            <option value="" selected disabled>Select</option>
+                            <option value="Studio">Studio</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Bathroom:</label>
+                        <select name="bathroom">
+                            <option value="" selected disabled>Select</option>
+                            <option value="Studio">Studio</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Square Feet</label>
+                        <input type="text" name="area" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Available Date</label>
+                        <input type="date" name="date" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Street Address</label>
+                        <input type="text" name="street_address" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>City, State and Zip Code</label>
+                        <input type="text" name="city_address" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>About:</label>
+                        <textarea name="about_info"></textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Policies</h2>
+                    <div class="section-content">
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="allows_pets" value="1">
+                                Allows Pets
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="allows_smoking" value="1">
+                                Allows Smoking
+                            </label>
+                        </div>
+
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="guarantor_accepted" value="1">
+                                Guarantor Accepted
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Apartment Amenities</h2>
+                    <div class="section-content">
+                        {% for amenity in ['doorman', 'bikeroom', 'elevator', 'laundry', 'gym', 'packageroom', 'parking', 'concierge', 'library'] %}
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="{{ amenity }}" value="1">
+                                {{ amenity.replace('_', ' ').title() }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Home Features</h2>
+                    <div class="section-content">
+                        {% for feature in ['centralair', 'dishwasher', 'hardwoodfloor', 'view', 'privateoutdoor', 'washerdryer', 'fridge', 'oven'] %}
+                        <div class="list-item-container">
+                            <label class="list-item-label">
+                                <input type="checkbox" name="{{ feature }}" value="1">
+                                {{ feature.replace('_', ' ').title() }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="confirmation-button-container">
+                    <button type="submit" class="save-btn">Create</button>
+                    <button class="cancel-btn">
+                        <nav>
+                            <a href="{{ url_for('house.get_all_houses')}}">Cancel</a>
+                        </nav>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+{% endblock %}
