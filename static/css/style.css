@@ -207,6 +207,11 @@ footer p{
     height: 3vh;
 }
 
+.empty-space{
+    width: 3.5vh;
+    height: 3.5vh;
+}
+
 .aptlist-apt-content {
     display: flex;
     letter-spacing: -1px;

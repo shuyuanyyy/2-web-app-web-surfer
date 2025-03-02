@@ -12,7 +12,15 @@
     <div class="all-container">
       <header>
         <div>
-          <img id="top-left-logo-image" src="/static/images/logo.png" alt="logo"/>
+          {% if session['is_admin']%}
+            <nav>
+              <a href="{{ url_for('user_management.admin_dashboard')}}"><img id="top-left-logo-image" src="/static/images/logo.png" alt="logo"/></a>
+            </nav>
+          {%else%}
+          <nav>
+            <a href="{{ url_for('house.get_all_houses')}}"><img id="top-left-logo-image" src="/static/images/logo.png" alt="logo"/></a>
+          </nav>
+          {%endif%}
         </div>
         {% if session['is_admin']%}
         <div id = "header-middle-container">

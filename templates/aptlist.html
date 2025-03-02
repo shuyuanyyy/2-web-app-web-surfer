@@ -42,6 +42,7 @@
               <!-- if usertype ==1 -->
                 <!-- <button class="close-btn">X</button> -->
                 <!-- 要改成如果不是admin就不render垃圾桶！！！！house_id should be house_id, not aptnumapt_id -->
+                {% if session['is_admin']%}
                 <div class="delete-icon-container">
                   <form action="{{ url_for('house.confirm_delete', house_id=apt.apt_num) }}" method="get">
                     <input type="hidden" name="apt_id" value="{{apt.apt_num}}">
@@ -50,6 +51,12 @@
                     </button>
                   </form>
                 </div>
+                {%else%}
+                <div class="empty-space">
+                </div>
+                
+                {%endif%}
+
                   <!-- <input type="hidden" name="apt_id" value="{{apt.price}}">
                   <button type="submit ">  -->
                   <div class="aptlist-apt-content">
