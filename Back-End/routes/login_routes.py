@@ -41,18 +41,23 @@ def login():
     if request.method == 'GET':
         return render_template("login.html")
     data = request.form
-    isAdmin = 1 if data.get("isAdmin") == "on" else 0
-    user = UserInformation.objects(username=data["username"], password=data["password"], usertype=isAdmin).first()
+    user = UserInformation.objects(username=data["username"], password=data["password"]).first()
+    isAdmin = user.usertype
     if not user:
         #return jsonify({"error": "Invalid username or password"}), 401
         #return render_template("login.html", error="Invalid username or password")
         return redirect(url_for("message.get_message",message="Invalid username or password",redirect=url_for("login.login")))
     
+    session['username'] = user.username
+    session['is_admin'] = bool(isAdmin)
+    session.modified = True
+
     access_token = create_access_token(identity=user.username)
     session['access_token'] = access_token
     response = redirect(url_for("user_management.admin_dashboard" if isAdmin == 1 else "house.get_all_houses"))
-    
-    set_access_cookies(response, access_token)
+    #response.set_cookie("access_token_cookie", access_token, max_age=3600, httponly=True, secure=False)
+    set_access_cookies(response, access_token, max_age=3600)
+    #set_access_cookies(response, access_token)
     return response
 
 
