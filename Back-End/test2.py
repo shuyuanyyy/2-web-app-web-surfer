@@ -14,7 +14,6 @@ sys.path.append(os.path.abspath("Back-End/routes"))
 from routes.login_routes import login_bp
 from routes.house_routes import house_bp
 from routes.user_management_routes import user_management_bp
-from routes.building_routes import building_bp
 from routes.message_routes import message_bp
 
 load_dotenv()  # load environment variables from .env file
@@ -79,7 +78,6 @@ def create_app():
     app.register_blueprint(login_bp, url_prefix="/login")
     app.register_blueprint(house_bp, url_prefix="/house")
     app.register_blueprint(user_management_bp, url_prefix="/users")
-    app.register_blueprint(building_bp, url_prefix="/building")
     app.register_blueprint(message_bp, url_prefix = "/message")
 
 
