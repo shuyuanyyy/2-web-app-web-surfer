@@ -8,6 +8,8 @@ Rental Surfer is a comprehensive apartment rental management system that connect
 
 ## User stories
 
+[User Stories](https://github.com/software-students-spring2025/2-web-app-web-surfer/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22User%20Stories%22)
+
 - As an admin, I can moderate and remove fraudulent or misleading listings, so that the platform remains reliable for users.
 - As a student, I can search all available rental buildings around my university, so that I can choose my preferred ones to reduce the commute time.
 - As a guest, I can search up a specific building for its availability, so that I have the availability of that building and can compare the price with other buildings.
