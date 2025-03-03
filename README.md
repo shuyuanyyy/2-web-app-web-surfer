@@ -17,10 +17,6 @@ Rental Surfer is a comprehensive apartment rental management system that connect
 
 ## Steps necessary to run the software
 
-### Rental Surfer - Apartment Rental Management System
-
-Rental Surfer is a comprehensive web application for managing apartment rentals. This system allows administrators to manage apartment listings and users, while guests can browse available apartments and save favorites to their wishlist.
-
 ### Features
 
 - User authentication with JWT
