@@ -6,7 +6,7 @@
 
 <html>
   <head>
-    <title>This is login title</title>
+    <title>Delete User</title>
     <link
       rel="stylesheet"
       href="/static/css/delete-user.css"
@@ -25,23 +25,22 @@
           </div>
         </div>
         <div class="user-details-container">
-          <form action="{{ url_for('delete_user_q', user_id=username) }}" method="post"></form>
           <p class="info-text">Username: {{username}}</p>
           <p class="info-text">Email: {{email}}</p>
         </div>
       </div>
 
-      <div class = "confirmation-button-container">
-        <form action="{{ url_for('message')}}" method="post">
+      <div class="confirmation-button-container">
+        <form action="{{ url_for('message.get_message') }}" method="post">
           <input type="hidden" name="username" value="{{username}}">
           <input type="hidden" name="email" value="{{email}}">
           <input type="hidden" name="message" value="User Deleted">
-
+          <input type="hidden" name="redirect" value="{{ url_for('user_management.get_all_users') }}">
           <button type="submit">Yes</button>
         </form>
         <button>
           <nav>
-            <a href="{{ url_for('userlist')}}">No</a>
+            <a href="{{ url_for('user_management.get_all_users') }}">No</a>
           </nav>
         </button>
       </div>

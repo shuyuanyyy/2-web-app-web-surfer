@@ -13,7 +13,7 @@
   <body>
     <div class="container"> 
       <div class="search-section">
-        <form action="{{ url_for('userlist') }}" method="get" class="search-form">
+        <form action="{{ url_for('user_management.get_all_users') }}" method="get" class="search-form">
           <input type="text" name="q" placeholder="Search user..." value="{{ search_term }}">
           <button type="submit">Search</button>
         </form>
@@ -46,7 +46,7 @@
                       </div>
                   </div>
                   <div class = "user-delete-icon-container">
-                    <form action="{{ url_for('delete_user_q', user_id=user.username) }}" method="post">
+                    <form action="{{ url_for('user_management.delete_user', user_name=user.username) }}" method="post">
                       <input type="hidden" name="username" value="{{ user.username }}">
                       <input type="hidden" name="email" value="{{ user.email }}">
                       <button type="submit">
