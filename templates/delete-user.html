@@ -31,11 +31,7 @@
       </div>
 
       <div class="confirmation-button-container">
-        <form action="{{ url_for('message.get_message') }}" method="post">
-          <input type="hidden" name="username" value="{{username}}">
-          <input type="hidden" name="email" value="{{email}}">
-          <input type="hidden" name="message" value="User Deleted">
-          <input type="hidden" name="redirect" value="{{ url_for('user_management.get_all_users') }}">
+        <form action="{{ url_for('user_management.confirm_delete_user', user_name=username) }}" method="post">
           <button type="submit">Yes</button>
         </form>
         <button>
