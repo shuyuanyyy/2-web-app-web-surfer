@@ -272,5 +272,5 @@ The application uses the following data models:
 
 ## Task Boards
 
-[Link to our project task board sprint 1](https://github.com/orgs/software-students-spring2025/projects/14)
-[Link to our project task board sprint 2](https://github.com/orgs/software-students-spring2025/projects/121)
+- [Link to our project task board sprint 1](https://github.com/orgs/software-students-spring2025/projects/14)
+- [Link to our project task board sprint 2](https://github.com/orgs/software-students-spring2025/projects/121)
