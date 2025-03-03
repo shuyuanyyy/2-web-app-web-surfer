@@ -139,7 +139,7 @@ def delete_user(user_name):
 
 
 
-# Add house to wishlist, directly come with url
+# add house to wishlist, directly come with url
 @user_management_bp.route('/wishlist/add/<house_id>', methods=['POST'])
 @jwt_required()
 def add_to_wishlist(house_id):
@@ -147,20 +147,17 @@ def add_to_wishlist(house_id):
     user = UserInformation.objects(username=current_user).first()
 
     if not user:
-        return jsonify({"error": "User not found"}), 404
+        return redirect(url_for("message.get_message", message="User not found", redirect=url_for("login.login")))
     
-    try:
-        house = House.objects(id=ObjectId(house_id)).first()
-    except:
-        return jsonify({"error": "Invalid house ID format"}), 400
+    house = House.objects(apt_num=house_id).first()
     
     if not house:
-        return jsonify({"error": "House not found"}), 404
+        return redirect(url_for("message.get_message", message="House not found", redirect=url_for("house.get_all_houses")))
     
     # check if house is already in wishlist
     existing_wishlist = Wishlist.objects(user=user, house=house).first()
     if existing_wishlist:
-        return jsonify({"error": "House already in wishlist"}), 400
+        return redirect(url_for("message.get_message", message="House already in wishlist", redirect=url_for("house.get_house", house_id=house.apt_num)))
     
     # add to wishlist
     new_wishlist = Wishlist(
@@ -168,11 +165,11 @@ def add_to_wishlist(house_id):
         house=house
     ).save()
     
-    return jsonify({"message": "House added to wishlist successfully"}), 201
+    return redirect(url_for("message.get_message", message="House added to wishlist successfully", redirect=url_for("house.get_house", house_id=house.apt_num)))
 
 
 # remove house from wishlist
-@user_management_bp.route('/wishlist/remove/<wishlist_id>', methods=['DELETE'])
+'''@user_management_bp.route('/wishlist/remove/<wishlist_id>', methods=['DELETE'])
 @jwt_required()
 def remove_from_wishlist(wishlist_id):
     current_user = get_jwt_identity()
@@ -195,4 +192,4 @@ def remove_from_wishlist(wishlist_id):
     
     wishlist_item.delete()
     
-    return jsonify({"message": "House removed from wishlist successfully"}), 200
+    return jsonify({"message": "House removed from wishlist successfully"}), 200'''
