@@ -255,15 +255,6 @@ The application uses the following data models:
 - Passwords should be properly hashed in a production environment
 - Environment variables should be properly secured
 
-### Development and Extending
-
-To extend the application:
-
-1. Add new routes in the appropriate blueprint files
-2. Create new templates in the templates directory
-3. Update the data models in models.py as needed
-4. Add new static assets in the static directory
-
 ## Task Boards
 
 [Link to our project task board](https://github.com/orgs/software-students-spring2025/projects/1)
