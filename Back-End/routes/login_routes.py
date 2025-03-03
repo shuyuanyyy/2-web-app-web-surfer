@@ -1,5 +1,5 @@
 from models import UserInformation
-from flask_jwt_extended import create_access_token, set_access_cookies
+from flask_jwt_extended import create_access_token, set_access_cookies, unset_jwt_cookies
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, session
 
 #login_bp = Blueprint("login", __name__)
@@ -21,10 +21,12 @@ def register():
         return redirect(url_for("message.get_message",message="Username already exists",redirect=url_for("login.register")))
         #return render_template("register.html", error="Username already exists")
     
+    is_admin = 1 if data.get('isAdmin') == 'on' else 0
+    
     new_user = UserInformation(
         username = data['username'],
         password = data['password'],
-        usertype=data.get("usertype",0), #change
+        usertype = is_admin, #change
         avatar = data.get('avatar',""),
         email=data['email']
     ).save()
@@ -66,3 +68,10 @@ def login():
     #    'access_token': access_token}
     #    ), 200
     
+#User Logout
+@login_bp.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    response = redirect(url_for('login.login'))
+    unset_jwt_cookies(response)
+    return response
