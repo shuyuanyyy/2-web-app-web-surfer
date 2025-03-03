@@ -23,15 +23,39 @@ def get_all_users():
     current_user = get_jwt_identity()
     admin_user = UserInformation.objects(username=current_user).first()
 
+    # get search query parameter
+    search_term = request.args.get('q', '')
+    
     if not admin_user:
         return jsonify({"error": "User not found"}), 404
-
     # check if user is admin
     if admin_user.usertype != 1:
         return jsonify({"error": "Permission denied: Only admins can view all users"}), 403
 
-    # get all users information; or should we also contain password
-    users = UserInformation.objects.exclude('password')
+    # filter users based on search term if it exists
+    if search_term and search_term.strip():
+        # create a regex pattern for case-insensitive search
+        regex_pattern = f'.*{search_term}.*'
+        # search for users where username or email matches the pattern
+        username_matches = UserInformation.objects(username__iregex=regex_pattern).exclude('password')
+        email_matches = UserInformation.objects(email__iregex=regex_pattern).exclude('password')
+        
+        # Ccmbine the query results
+        user_ids = set()
+        users = []
+        
+        for user in username_matches:
+            if str(user.id) not in user_ids:
+                users.append(user)
+                user_ids.add(str(user.id))
+                
+        for user in email_matches:
+            if str(user.id) not in user_ids:
+                users.append(user)
+                user_ids.add(str(user.id))
+    else:
+        # get all users information if no search term
+        users = UserInformation.objects.exclude('password')
 
     user_list = []
     for user in users:
@@ -43,7 +67,7 @@ def get_all_users():
             "avatar": user.avatar
         })
 
-    return render_template("userlist.html", usersInfo=user_list)
+    return render_template("userlist.html", usersInfo=user_list, search_term=search_term, target=search_term)
 
 
 # detailed information of a single user
@@ -126,16 +150,43 @@ def delete_user(user_name):
     if user.username == admin_user.username:
         return redirect(url_for("message.get_message", message="You cannot delete your own admin account", redirect=url_for("user_management.get_all_users")))
 
-    # delete all wishlists associated with this user
+    # Instead of deleting, show confirmation page
+    return render_template("delete-user.html", 
+                      q_message="Are you sure that you want to delete this user?",
+                      username=user_name,
+                      email=user.email)
+    
+@user_management_bp.route('/confirm-delete/<user_name>', methods=['POST'])
+@jwt_required()
+def confirm_delete_user(user_name):
+    # verify current user identity
+    current_user = get_jwt_identity()
+    admin_user = UserInformation.objects(username=current_user).first()
+
+    if not admin_user:
+        return redirect(url_for("message.get_message", message="User not found", redirect=url_for("login.login")))
+    
+    if admin_user.usertype != 1:
+        return redirect(url_for("message.get_message", message="Permission denied: Only admins can delete users", redirect=url_for("house.get_all_houses")))
+
+    # get the user to delete
+    try:
+        user = UserInformation.objects(username=user_name).first()
+    except:
+        return redirect(url_for("message.get_message", message="Invalid user format", redirect=url_for("user_management.get_all_users")))
+    if not user:
+        return redirect(url_for("message.get_message", message="User to delete not found", redirect=url_for("user_management.get_all_users")))
+
+    # admin should not delete their own account
+    if user.username == admin_user.username:
+        return redirect(url_for("message.get_message", message="You cannot delete your own admin account", redirect=url_for("user_management.get_all_users")))
+
     Wishlist.objects(user=user).delete()
 
     # delete user
     user.delete()
 
-    return render_template("delete-user.html", 
-                      q_message="Are you sure that you want to delete this user?",
-                      username=user_name,
-                      email=user.email)
+    return redirect(url_for("message.get_message", message="User deleted successfully", redirect=url_for("user_management.get_all_users")))
 
 
 
