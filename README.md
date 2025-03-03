@@ -16,7 +16,6 @@ Rental Surfer is a comprehensive apartment rental management system that connect
 - As a guest, I can view all prices of a specific apartment on the website, so that I know the price of the apartments available in the area.
 - As a tenant, I want to compare the prices of similar properties on the website, so that I can assess if I am overpaying and negotiate better with my landlord.
 - As a landlord, I want to compare rental prices of similar properties in my area on the website, so that I can accurately price my rental.
-- As a guest, I can search up a specific building for its availability, so that I have the availability of that building and can compare the price with other buildings 
 - As a guest, I can save my favorite listings, so that I can compare them later and make a final decision more easily.
 
 ## Steps necessary to run the software
