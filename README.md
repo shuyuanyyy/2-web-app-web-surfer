@@ -11,7 +11,7 @@ Rental Surfer is a comprehensive apartment rental management system that connect
 [User Stories](https://github.com/software-students-spring2025/2-web-app-web-surfer/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22User%20Stories%22)
 
 - As an admin, I can moderate and remove fraudulent or misleading listings, so that the platform remains reliable for users.
-- As a student, I can search all available rental buildings around my university, so that I can choose my preferred ones to reduce the commute time.
+- As a student, I can search all available rental buildings around my university so that I can choose my preferred ones to reduce the commute time.
 - As a guest, I can search up a specific building for its availability, so that I have the availability of that building and can compare the price with other buildings.
 - As a guest, I can view all prices of a specific apartment on the website, so that I know the price of the apartments available in the area.
 - As a tenant, I want to compare the prices of similar properties on the website, so that I can assess if I am overpaying and negotiate better with my landlord.
@@ -57,7 +57,7 @@ Rental Surfer is a comprehensive apartment rental management system that connect
    pip install flask flask-jwt-extended pymongo mongoengine python-dotenv
    ```
 
-4. Create a `.env` file in the project root with the following variables:
+4. Create a `.env` file in the Back-End directory with the following variables:
    ```
    MONGO_URI=mongodb://localhost:27017/SWE_Project2_Rental_Software
    MONGO_DBNAME=SWE_Project2_Rental_Software
@@ -66,6 +66,22 @@ Rental Surfer is a comprehensive apartment rental management system that connect
    FLASK_PORT=6000
    FLASK_ENV=development
    ```
+
+### Example Users
+
+For testing purposes, the application includes default users:
+
+- **Admin User**:
+  - Username: Bob
+  - Password: 1234567
+  - Email: bb123@gmail.com
+
+- **Guest User**:
+  - Username: Alex
+  - Password: 1234567
+  - Email: a1234@gmail.com
+
+You can use these credentials to test the application without registration.
 
 ### Running the Application
 
