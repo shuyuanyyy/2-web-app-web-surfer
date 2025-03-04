@@ -77,7 +77,7 @@ def create_house():
         bedroom=data.get("bedroom"),
         bathroom=data.get("bathroom"),
         area=data.get("area"),
-        available_date=data.get("date"),
+        available_date=data.get("date").strftime("%Y-%m-%d"),
         address=full_address,
         posted_admin=posted_admin,
         about_info=data.get("about_info"),
@@ -345,8 +345,17 @@ def update_house(house_id):
 
 @house_bp.route('/confirm-update/<house_id>', methods=['GET'])
 def confirm_update(house_id):
-    house = House.objects(apt_num=house_id).first()
-
+    # house = House.objects(apt_num=house_id).first()
+    house={
+        "buildingName":request.args.get('buildingName', ''),
+        "apt_num":request.args.get('apt_num', ''),
+        "price":request.args.get('price', ''),
+        "bedroom":request.args.get('bedroom', ''),
+        "bathroom":request.args.get('bathroom', ''),
+        "area":request.args.get('area', ''),
+        "date":request.args.get('date', ''),
+    }
+    
     if not house:
         return jsonify({"error": "House not found"}), 404
 
