@@ -128,23 +128,25 @@ Depends on whether the user is logged in as an administrator, the functionality 
 The capability of each type of user is listed below:
 
 Rental Surfer
-│── Guest
-│ ├── View all available units
-│ ├── View detail information of selected unit
-│ ├── Search for units based on city or address  
-│ ├── Add a unit to wishlist
-│ ├── Go to profile page and view all units in the wishlist
-│── Admin
-│ ├── View all available units
-│ ├── View detail information of selected unit
-│ ├── Search for units based on city or address
-│ ├── Go to profile page and view own profile info
-│ ├── Post a new unit
-│ ├── Edit a existing unit
-│ ├── Delete a existing unit
-│ ├── View all users
-│ ├── Search for a specific user based on username or email address
-│ ├── Delete existing users
+│── Guest 
+│   ├── View all available units  
+│   ├── View detailed information of a selected unit  
+│   ├── Search for units based on city or address  
+│   ├── Add a unit to wishlist  
+│   ├── Go to profile page and view all units in the wishlist  
+
+│── Admin  
+│   ├── View all available units  
+│   ├── View detailed information of a selected unit  
+│   ├── Search for units based on city or address  
+│   ├── Go to profile page and view own profile info  
+│   ├── Post a new unit  
+│   ├── Edit an existing unit  
+│   ├── Delete an existing unit  
+│   ├── View all users  
+│   ├── Search for a specific user based on username or email address  
+│   ├── Delete existing users  
+
 
 **Detailed user guid below:**
 
