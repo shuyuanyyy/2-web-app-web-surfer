@@ -16,7 +16,7 @@
         <div class="search-section">
           <form action="{{ url_for('house.get_all_houses') }}" method="get" class="search-form">
             <div>
-              <input type="text" name="q" placeholder="Search building or area..." value="{{ search_term }}">
+              <input type="text" name="q" placeholder="Search building or place" value="{{ search_term }}">
               {% if target == ""%}
               <div class="search-result"> </div>
               {% else %}
