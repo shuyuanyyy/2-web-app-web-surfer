@@ -50,34 +50,38 @@
                 <ul>
                 {% for apt in houseInfo %}
                 <li>
-                    <div class="wishlist-apt-widget">
-                        <!-- <button class="close-btn">X</button> -->
-                        <div class="apt-content">
-                            <div class="apt-details">
+                    <a href="{{ url_for('house.get_house', house_id=apt.apt_num)}}">
+                        <div class="apt-widget">
+                          <div class="empty-space">
+                          </div>
+                            <div class="aptlist-apt-content">
+                              <div class="apt-details">
                                 <p class="apt-price">${{apt.price}}/mo</p>
                                 {% if apt.bedroom == "Studio" %}
-                                <p class="apt-type-and-size">Studio {{apt.area}} sqft</p>
+                                <p class="apt-type-and-size">Studio | {{apt.area}} sqft</p>
                                 {% else %}
-                                <p class="apt-type-and-size">{{apt.bedroom}} Bd {{apt.bathroom}} Ba {{apt.area}} sqft</p>
+                                <p class="apt-type-and-size">{{apt.bedroom}} Bd | {{apt.bathroom}} Ba | {{apt.area}} sqft</p>
                                 {% endif %}
-                                <p class="apt-available-date">{{apt.available_date}}</p>
+                                <p class="apt-available-date">Available:<br>{{apt.available_date}}</p>
                                 <div class="apt-building-name-apt-num-container">
-                                    <span class="apt-building-name">{{apt.building}}</span>
-                                    <span class="apt-apt-num">{{apt.apt_num}}</span>
+                                  <span class="apt-building-name">{{apt.building}}</span>
+                                  <span class="apt-apt-num">{{apt.apt_num}}</span>
                                 </div>
+                              </div>
+                              <div class="apt-image">
+                                  <div class="placeholder">Picture</div>
+                              </div>
                             </div>
-                            <div class="apt-image">
-                                <div class="placeholder">Picture</div>
-                            </div>
+                            <p class="apt-area">{{apt.city}}</p>
                         </div>
-                        <p class="apt-area">{{apt.city}}</p>
-                    </div>
+                    </a>
                 </li>
                 {% endfor %}
-            </ul>
+                </ul>
             {%else%}
                 <span id="wishlist-empty-message">Wishlist is empty</span>
             {%endif%}
+            
             </div>
         </div>
         {% endif %}

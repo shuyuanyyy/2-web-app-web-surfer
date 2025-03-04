@@ -1,15 +1,15 @@
 .message{
-    font-size:70px;
+    font-size:4vh;
     font-weight: bolder;
     text-wrap: balance;
     align-self: center;
 }
 
 .message-container{
-    min-height: 1680px;
+    min-height: 75vh;
     display:flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    max-width: 860px;
+    /* max-width: 860px; */
 }

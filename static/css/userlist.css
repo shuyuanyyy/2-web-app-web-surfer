@@ -80,7 +80,8 @@
 .user-widget-container{
     display: flex;
     flex-direction: column;
-    gap:30px;
+    margin-top: 5vh;
+    gap: 2vw;
     /* margin-top: 40px; */
 }
 
@@ -90,16 +91,18 @@
 }
 
 .user-widget-container>ul>li{
-    margin-bottom:30px;
+    margin-bottom:2vh;
 }
 
 .user-widget-info-only {
-    width: 90%;
     background-color: #d1d1d1;
-    padding: 40px;
+    padding: 20px;
+    padding-right: 30px;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 3vh;
+    width: fit-content;
 }
 
 .user-widget-info-only p{
@@ -112,6 +115,13 @@
     justify-items: center;
 }
 
+.delete-icon{
+    width: 3vh;
+    height: 3vh;
+    position: relative;
+    top: -10px;
+}
+
 .user-delete-icon-container > form > button{
     background-color: transparent;
     border: transparent;
@@ -119,35 +129,38 @@
 
 .user-content {
     display: flex;
-    letter-spacing: -1px
+    letter-spacing: -1px;
+    gap: 10%;
     /* justify-content: space-between;
     align-items: center; */
 }
 
 .user-details {
     flex: 1;
-    padding-top: 10px;
+    /* padding-top: 10px;
     padding-right: 10px;
-    padding-left: 10px;
+    padding-left: 10px; */
+    width: 200px;
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
 }
 
 .user-name {
-    font-size: 50px;
+    font-size: 3vh;
     color: #000;
     font-weight: bold;
     /* margin-top: -5px; */
 }
 
 .user-email{
-    font-size: 40px;
+    font-size: 2vh;
     color: #000;
 }
 
 .user-widget-avatar {
-    width: 230px;
-    height: 230px;
+    width: 7vh;
+    height: 7vh;
     padding:20px;
     background: #212e33;
     display: flex;

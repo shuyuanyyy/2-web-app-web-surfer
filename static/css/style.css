@@ -177,7 +177,9 @@ footer p{
 }
 
 .apt-widget {
-    width: 93%;
+    width: 100%;
+    max-width: 700px;
+    min-width: 435px;
     background-color: #d1d1d1;
     /* padding: 1vh 1vw; */
     border-radius: 8px;
@@ -320,6 +322,7 @@ footer p{
     font-size: 2vh;
     font-family: Monaco, Monospace;
     font-weight: bold;
+    border: 1px solid gray;
     /* color: white; */
 }
 
