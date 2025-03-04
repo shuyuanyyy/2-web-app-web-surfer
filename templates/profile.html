@@ -15,7 +15,7 @@
     <div class="container">
         <div class = "basic-info-container">
             <div class = "avatar-username-container">
-                <img src="/static/images/user-avatar.png" alt="user avatar" width="300" height="300"/>
+                <img src="/static/images/user-avatar.png" alt="user avatar" class="profile-user-avatar-image"/>
                 <div class = "username-identity-container">
                     <div class = "sub-info-container">
                         <span>Username</span>
@@ -32,9 +32,13 @@
                 <span>Email</span>
                 <span>{{userInfo.email}}</span>
             </div>
-            
         </div>
-        {% if userInfo.usertype == 0 %}
+
+
+        {% if session['is_admin'] %}
+        <div class="admin-replace-aptlist-container"></div>
+        
+        {% else %}
         <div class = "aptlist-display-container">
             <div class = "subtitle-container">
                 <span class = "subtitle">Wishlist</span>
@@ -42,6 +46,7 @@
 
             
             <div class="aptlist-widget-container">
+            {% if houseInfo %}         
                 <ul>
                 {% for apt in houseInfo %}
                 <li>
@@ -70,11 +75,11 @@
                 </li>
                 {% endfor %}
             </ul>
+            {%else%}
+                <span id="wishlist-empty-message">Wishlist is empty</span>
+            {%endif%}
             </div>
         </div>
-
-        {% else %}
-        <div class="admin-replace-aptlist-container"></div>
         {% endif %}
         
         <div class = "logout-container">

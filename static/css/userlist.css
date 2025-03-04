@@ -3,7 +3,7 @@
     gap: 20px;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 5vh;
 }
 
 .search-form {
@@ -11,41 +11,44 @@
     gap: 30px;
 }
 
+.search-form div {
+    width: 40vw;
+}
+
 .search-form input {
     padding: 8px 15px;
     border: 2px solid #a4a4a4;
     border-radius: 4px;
-    width: 630px;
-    font-size:40px;
+    width: 35vw;
+    height: 3vh;
     font-family: Monaco, Monospace;
     letter-spacing: -1px;
-    font-size: 40px;
+    font-size: 2vh;
 }
 
 .search-form button {
-    padding: 8px 20px;
+    padding: 8px 3vw;
     background: #4a5568;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    height: 100px;
-    font-size:40px;
+    width:fit-content;
+    height: 5vh;
     font-family: Monaco, Monospace;
-    font-size: 40px;
-    letter-spacing: -1px;
+    font-size: 2vh;
+
 }
 
 .search-result {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     color: gray;
-    font-size: 35px;
+    font-size: 2vh;
     padding-left: 0.5rem;
-
 }
 
 .subtitle{
-    font-size:70px;
+    font-size:4vh;
     font-weight: bolder;
 }
 

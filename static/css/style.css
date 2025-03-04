@@ -100,11 +100,17 @@ footer p{
 
 .basic-info-container{
     margin-top: 50px;
+    padding-left: 5vw;
 }
 
 .avatar-username-container {
     display: flex;
     column-gap: 60px;
+}
+
+.profile-user-avatar-image{
+    width: 15vh;
+    height: 15vh;
 }
 
 .username-identity-container{
@@ -120,20 +126,21 @@ footer p{
 
 .sub-info-container :first-child{
     color:gray;
-    font-size: 40px;
-    border-bottom: 1px solid #000;
+    font-size: 2.5vh;
+    border-bottom: 2px solid #4a5568;
     width: fit-content;
 }
 
 .sub-info-container :nth-child(2){
     color:#474747;
     font-weight: bold;
-    padding:5px
+    font-size: 2vh;
+    margin-top: 5px;
 }
 
 #identity{
     color:gray;
-    font-size: 40px;
+    font-size: 2vh;
 }
 
 #email-container{
@@ -299,24 +306,31 @@ footer p{
 .logout-container{
     display: flex;
     justify-content: center;
-    height: 200px;
+    height: fit-content;
     margin-bottom: 60px;
 }
 
 .logout-button{
     background-color: #d1d1d1;
-    border-radius: 20px;
-    width: 50%;
+    border-radius: 8px;
+    width: fit-content;
     align-self: center;
-    height: 100px;
+    height: content;
     padding:10px;
-    font-size: 40px;
+    font-size: 2vh;
     font-family: Monaco, Monospace;
     font-weight: bold;
+    /* color: white; */
+}
+
+#wishlist-empty-message{
+    text-align: center;
+    margin-bottom: 30px;
+    color: gray;
 }
 
 .admin-replace-aptlist-container{
-    min-height: 900px;
+    min-height: 35vh;
 }
 
 .search-section {
@@ -325,8 +339,6 @@ footer p{
     align-items: center;
     justify-content: center;
     margin-top: 5vh;
-
-
 }
 
 .search-form {
