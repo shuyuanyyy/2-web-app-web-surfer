@@ -52,10 +52,11 @@
                                 <p class="info-item">Available <br> {{ apt.available_date.strftime('%Y-%m-%d') }}</p>
                             </div>
                             <div class="apt-address">
-                                <p class="info-item" id="apt-address-text">{{ apt.street_address }}<br>{{apt.city_address}}</p>
+                                <p class="info-item" id="apt-address-text">{{ apt.address }}<br></p>
                             </div>
                         </div>
                         <p class="info-item">Listed by: {{ apt.posted_admin }}</p>
+                        
                     </div>
                 </div>
                 
