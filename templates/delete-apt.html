@@ -45,7 +45,6 @@
 
       <div class = "confirmation-button-container">
         <form action="{{ url_for('house.delete_house', house_id = apt.apt_num)}}" method="post">
-          <!-- <input type="hidden" name="id" value="{{apt.price}}"> Need to change-->
           <input type="hidden" name="_method" value="DELETE">
           <input type="hidden" name="building" value="{{apt.building}}">
           <input type="hidden" name="apt_num" value="{{apt.apt_num}}">

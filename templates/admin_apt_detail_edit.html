@@ -10,7 +10,6 @@
     <div class="container">
 
         <div class="apt-detail">
-            <!-- <form id="aptEditForm"> -->
             <form id="aptEditForm" action="{{ url_for('house.confirm_update', house_id=apt.apt_num) }}" method="GET"
                 data-apt-id="{{ apt.apt_num }}">
 

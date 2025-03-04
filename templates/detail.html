@@ -16,7 +16,7 @@
             <div class="apt-detail-container">
                 <div class="apt-basic-container">
                     <div class="upper-container">
-                        <h2 class="section-title">{{building.name}} {{apt.apt_num}}</h2>
+                        <h2 class="section-title">{{apt.building}} {{apt.apt_num}}</h2>
 
                         <div class="apt-price-basic-like-icon-container">
                             <div class="apt-price-basic-container">
@@ -58,7 +58,6 @@
                         <p class="info-item">Listed by: {{ apt.posted_admin }}</p>
                     </div>
                 </div>
-
                 
                 <div class="section">
                     <h2 class="subtitle">About</h2>
@@ -66,9 +65,6 @@
                         {{apt.about_info}}
                     </p>
                 </div>
-
-
-
 
                 <div class="section">
                     <h2 class="subtitle">Policies</h2>
@@ -94,7 +90,6 @@
                         <p>No policies available.</p>
                     {% endif %}
                 </div>
-
 
                 <div class="section">
                     <h2 class="subtitle">Apartment Amenities</h2>
@@ -149,8 +144,7 @@
                             <p>No amenities available.</p>
                         {% endif %}
                     </div>
-                </div>
-                
+                </div>  
 
                 <div class="section">
                     <h2 class="subtitle">Home Features</h2>
@@ -206,19 +200,11 @@
                 <div class="section">
                 <h2 class="subtitle">{{building.name}}</h2>
                 <div class="building-basic-info">
-                    <!-- need to revise -->
-                    <p class="about-item">Address: {{ building.address }}</p>
+                    <!-- <p class="about-item">Address: {{ building.address }}</p>
                     <p class="about-item">Number of Units: {{ building.num_unit }}</p>
-                    <p class="about-item">About: {{ building.about_info }}</p>
+                    <p class="about-item">About: {{ building.about_info }}</p> -->
                 </div>
             </div>
-<!--             
-            <div class="debug-info">
-                <p>apt: {{ apt }}</p>
-                <p>Amenities: {{ apt.amenities }}</p>
-                <p>Features: {{ apt.features }}</p>
-                <p>Policies: {{ apt.policies }}</p>
-            </div> -->
         </div>
     </body>
     <script>

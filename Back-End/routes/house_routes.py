@@ -295,7 +295,7 @@ def update_house(house_id):
         set__bedroom=data.get("bedroom", house.bedroom),
         set__bathroom=data.get("bathroom", house.bathroom),
         set__area=data.get("area", house.area),
-        set__available_date=data.get("date", house.available_date),
+        set__available_date=data.get("date", house.available_date.strftime("%Y-%m-%d")),
         set__address=data.get("street_address", house.address),
         set__posted_admin=house.posted_admin,  # Keep the original poster
         set__about_info=data.get("about_info", house.about_info),

@@ -1,4 +1,4 @@
-from mongoengine import Document, StringField, IntField, EmailField, ReferenceField, DateTimeField, FloatField
+from mongoengine import Document, StringField, IntField, EmailField, ReferenceField, DateField, FloatField
 from datetime import datetime
 from mongoengine import connect
 
@@ -65,7 +65,7 @@ class House(Document):
     bedroom = StringField(required=True)
     bathroom = StringField(required=True)
     area = StringField(required=True)
-    available_date = DateTimeField(required=True)
+    available_date = DateField(required=True)
     address = StringField(required=True)
     posted_admin = StringField(required=True)
     about_info = StringField()
@@ -83,8 +83,8 @@ class Wishlist(Document):
 
 
 #Insert data
-""" #Insert a user
-user_admin = UserInformation(
+ #Insert a user
+"""user_admin = UserInformation(
     username="Bob",
     password="1234567",
     usertype=1,
