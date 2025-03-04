@@ -68,7 +68,6 @@ Rental Surfer is a comprehensive apartment rental management web application tha
    ```
    MONGO_URI=mongodb://localhost:27017/SWE_Project2_Rental_Software
    MONGO_DBNAME=SWE_Project2_Rental_Software
-   SECRET_KEY=SWE_Project2
    JWT_SECRET_KEY=SWE_Project2
    FLASK_PORT=6000
    FLASK_ENV=development
