@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block container %}
 <html>
 <head>
     <title>404 - Not found</title>
@@ -6,11 +9,15 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 50px;
         }
         .error-container {
             max-width: 500px;
             margin: 0 auto;
+            height: 68vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
         }
         .error-code {
             font-size: 72px;
@@ -32,7 +39,10 @@
         <div class="error-code">404</div>
         <div class="error-message">Not found</div>
         <p>Sorry, the page you are trying to find do not exist </p>
-        <!-- <a href="/login" class="back-link">返回登录页面</a> -->
+        <!-- <p>Sorry, the page you are trying to find do not exist </p> -->
+        <p>Back to <a href="{{ url_for('login.login') }}" class="back-link">login</a> page</p>
     </div>
 </body>
 </html> 
+
+{% endblock %}

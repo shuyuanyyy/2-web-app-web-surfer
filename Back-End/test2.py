@@ -84,6 +84,20 @@ def create_app():
     @app.route("/")
     def home():
         return redirect(url_for("login.login"))
+    
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('404.html')
+    
+    @app.errorhandler(405)
+    def method_not_allowed(e):
+        return render_template('404.html')
+    
+    @app.errorhandler(500)
+    def error(e):
+        return render_template('message.html',message="error",redirectWebsite=url_for(home))
+    
     return app
 
 
