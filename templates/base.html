@@ -25,24 +25,21 @@
         {% if session['is_admin']%}
         <div id = "header-middle-container">
           <div id="header-middle">
-            <div>
-              <nav>
+            <nav>
+              <div>
                 <a href="{{ url_for('house.create_house_page')}}">Create</a>
-              </nav>
-            </div>
-            <div>
-              <nav>
-                <!--only admin can see -->
-                <a href="{{ url_for('user_management.admin_dashboard')}}">Admin Dashboard</a>
-              </nav>
-            </div>
+              </div>
+            </nav>
+            <nav>
+              <div>
+                <a href="{{ url_for('user_management.admin_dashboard')}}">Dashboard</a>
+              </div>
+            </nav>
           </div>
           {% endif %}
           <div id="top-right-avatar-container">
             <a href="{{ url_for('user_management.get_user',user_name='67b8d6f05da61bc65fceb190')}}">
             <img id="user-avatar-image" src="/static/images/user-avatar.png" alt="user avatar"/>
-            <!-- <span id = "top-right-username">{{session['username']}}</span> -->
-
             {% if session.get('username') != None%}
             <div id = "top-right-username">{{session['username']}}</div>
             {% else %}

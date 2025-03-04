@@ -8,8 +8,17 @@
 .message-container{
     min-height: 75vh;
     display:flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     /* max-width: 860px; */
+}
+
+.message-container div{
+    width: 75%;
+}
+
+.message-container div p{
+    color: gray;
 }

@@ -19,22 +19,29 @@ header{
     justify-content: end;
     align-items: center;
     /* padding: 0px 40px; */
-    gap: 10px
+    /* gap: 10px */
+    padding-right: 2px;
 }
 
-#header-middle div nav a{
+#header-middle nav div a{
     text-align: center;
     font-size: 1.5vh;
     max-width: 6vh;
+    padding: 15px;
     /* background-color: #474747; */
 }
 
-#header-middle div nav{
+#header-middle nav div{
     text-align: center;
 }
 
-#header-middle div{
+
+#header-middle nav{
     max-width: 10vh;
+    height: 100%;
+    border-right: 1px solid #d1d1d1;
+    background-color: #e7e7e7;
+    align-content: center;
 }
 
 #header-middle-container{
@@ -179,7 +186,7 @@ footer p{
 .apt-widget {
     width: 100%;
     max-width: 700px;
-    min-width: 435px;
+    /* min-width: 435px; */
     background-color: #d1d1d1;
     /* padding: 1vh 1vw; */
     border-radius: 8px;
@@ -200,7 +207,7 @@ footer p{
     justify-items: center;
     position: relative;
     top: -2vh;
-    left: 80vw;
+    left: 84vw;
     /* width: 3vh;
     height: 3vh; */
     background-color: transparent;
@@ -350,14 +357,15 @@ footer p{
 }
 
 .search-form div {
-    width: 40vw;
+    /* width: 40vw; */
 }
 
 .search-form input {
     padding: 8px 15px;
     border: 2px solid #a4a4a4;
     border-radius: 4px;
-    width: 35vw;
+    width: 32vw;
+    min-width: 255px;
     height: 3vh;
     font-family: Monaco, Monospace;
     letter-spacing: -1px;
