@@ -82,12 +82,12 @@ For testing purposes, the application includes default users:
 
   - Username: Bob
   - Password: 1234567
-  - Email: bb123@gmail.com
+  - Email: bob@example.com
 
 - **Guest User**:
   - Username: Alex
   - Password: 1234567
-  - Email: a1234@gmail.com
+  - Email: alex@example.com
 
 You can use these credentials to test the application without registration.
 
