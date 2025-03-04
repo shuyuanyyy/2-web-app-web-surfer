@@ -105,13 +105,19 @@ You can use these credentials to test the application without registration.
    cd Back-End
    ```
 
-3. Run the application:
+3. Initialize the database:
+
+   ```bash
+   python initial_data_load.py
+   ```
+
+4. Run the application:
 
    ```bash
    python test2.py
    ```
 
-4. Open your browser and go to:
+5. Open your browser and go to:
    ```
    http://127.0.0.1:6000
    ```
