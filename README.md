@@ -125,7 +125,7 @@ You can use these credentials to test the application without registration.
 
 Depends on whether the user is logged in as an administrator, the functionality varies.
 The capability of each type of user is listed below:
-
+```
 Rental Surfer
 │── Guest
 │ ├── View all available units
@@ -144,7 +144,7 @@ Rental Surfer
 │ ├── View all users
 │ ├── Search for a specific user based on username or email address
 │ ├── Delete existing users
-
+```
 **Detailed user guid below:**
 
 #### Authentication
