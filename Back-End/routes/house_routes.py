@@ -109,6 +109,72 @@ def confirm_create():
 #show all houses
 @house_bp.route('/list', methods=['GET'])
 def get_all_houses():
+    
+    search_term = request.args.get('q', '')
+    
+    # get all houses first
+    houses = House.objects.only(
+        "apt_num","building", "price", "bedroom", 
+        "bathroom", "area", "available_date", "address", "picture"
+    )
+    
+    # filter in Python
+    house_list = []
+    for house in houses:
+        # If there's a search term, filter by building name or address
+        if search_term and search_term.strip():
+            # case-insensitive search
+            search_term_lower = search_term.lower()
+            
+            # check if search term is in building name or address
+            if (search_term_lower in house.building.lower() or 
+                search_term_lower in house.address.lower()):
+                
+                house_dict = {
+                    "apt_num": house.apt_num,
+                    "building": house.building,
+                    "price": house.price,
+                    "bedroom": house.bedroom,
+                    "bathroom": house.bathroom,
+                    "area": house.area,
+                    "available_date": house.available_date.strftime("%Y-%m-%d"),
+                    "address": house.address,
+                    "picture": house.picture
+                }
+                
+                # extract city from address
+                if ',' in house.address:
+                    house_dict["city"] = house.address.split(',', 1)[1].strip()
+                else:
+                    house_dict["city"] = house.address
+                    
+                house_list.append(house_dict)
+        else:
+            # if no search term, include all houses
+            house_dict = {
+                "apt_num": house.apt_num,
+                "building": house.building,
+                "price": house.price,
+                "bedroom": house.bedroom,
+                "bathroom": house.bathroom,
+                "area": house.area,
+                "available_date": house.available_date.strftime("%Y-%m-%d") if house.available_date else None,
+                "address": house.address,
+                "picture": house.picture
+            }
+            
+            # extract city from address
+            if ',' in house.address:
+                house_dict["city"] = house.address.split(',', 1)[1].strip()
+            else:
+                house_dict["city"] = house.address
+                
+            house_list.append(house_dict)
+            
+    return render_template("aptlist.html", houseInfo=house_list, search_term=search_term, target=search_term)
+
+'''@house_bp.route('/list', methods=['GET'])
+def get_all_houses():
     #only show part of the data in houses
     houses = House.objects.only(
         "apt_num","building", "price", "bedroom", 
@@ -128,7 +194,7 @@ def get_all_houses():
             "address": house.address,
             "picture": house.picture
         })
-    return render_template("aptlist.html", houseInfo=house_list)
+    return render_template("aptlist.html", houseInfo=house_list)'''
 
 
 #get details of a specific house
