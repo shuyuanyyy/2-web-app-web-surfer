@@ -126,9 +126,15 @@
     gap:40px
 }
 
-#apt-address-text{
-    text-align: end;
+.apt-address{
+    display: flex;
+    justify-content: end;
 }
+
+/* #apt-address-text{
+    text-align: end;
+    max-width: 7%;
+} */
 
 .apt-basic-container p{
     line-height: 120%;
