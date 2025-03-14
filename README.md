@@ -145,7 +145,7 @@ Rental Surfer
 │ ├── Search for a specific user based on username or email address
 │ ├── Delete existing users
 ```
-**Detailed user guid below:**
+**Detailed user guide below:**
 
 #### Authentication
 
